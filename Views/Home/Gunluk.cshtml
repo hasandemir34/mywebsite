@@ -1,0 +1,47 @@
+@model List<mywebsite.Models.Blog>
+@{
+    ViewData["Title"] = "Öğrenme Günlüğüm";
+}
+
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h1 class="display-5 fw-bold">Yazılım Serüvenim & Günlük</h1>
+        <p class="text-muted">Öğrendiklerimi, projelerimi ve teknik notlarımı burada paylaşıyorum.</p>
+        <hr class="w-25 mx-auto">
+    </div>
+
+    <div class="row">
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var yazi in Model)
+            {
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2">Blog Yazısı</span>
+                                <small class="text-muted">@yazi.CreatedDate.ToShortDateString()</small>
+                            </div>
+                            <h4 class="card-title fw-bold mb-3">@yazi.Title</h4>
+                            <p class="card-text text-secondary mb-4">
+                                @(yazi.Content.Length > 120 ? yazi.Content.Substring(0, 120) + "..." : yazi.Content)
+                            </p>
+                        </div>
+                        <div class="card-footer bg-transparent border-0 p-4 pt-0">
+                            <a href="#" class="btn btn-outline-primary btn-sm rounded-pill px-4">Devamını Oku</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12 text-center py-5">
+                <div class="alert alert-light border shadow-sm">
+                    <i class="fas fa-pen-nib fa-3x mb-3 text-muted"></i>
+                    <p class="lead mb-0">Henüz bir yazı paylaşılmadı. İlk yazını eklemeye ne dersin?</p>
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -42,4 +42,25 @@ public class HomeController : Controller
     {
         return View();
     }
+
+    // Yazı ekleme sayfasını açar (GET)
+public IActionResult BlogEkle() => View();
+
+// Formdan gelen veriyi veritabanına kaydeder (POST)
+[HttpPost]
+public IActionResult BlogEkle(Blog yeniBlog)
+{
+    if (ModelState.IsValid)
+    {
+        yeniBlog.CreatedDate = DateTime.Now; // Tarihi otomatik ata
+        _context.Blogs.Add(yeniBlog);
+        _context.SaveChanges();
+        return RedirectToAction("Gunluk");
+    }
+    return View(yeniBlog);
+}
+
+
+
+
 }
