@@ -95,3 +95,4 @@ C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\obj\Debug\net10.0\refint\mywebsite.
 C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\obj\Debug\net10.0\mywebsite.pdb
 C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\obj\Debug\net10.0\mywebsite.genruntimeconfig.cache
 C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\obj\Debug\net10.0\ref\mywebsite.dll
+C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\obj\Debug\net10.0\mywebsite.sourcelink.json
