@@ -17,9 +17,17 @@ public class HomeController : Controller
 
     // ANASAYFA: Kendini tanıttığın yer
     public IActionResult Index()
-    {
-        return View();
-    }
+{
+    var startDate = DateTime.Now.Date.AddDays(-364);
+    var blogCounts = _context.Blogs
+        .Where(x => x.CreatedDate >= startDate)
+        .GroupBy(x => x.CreatedDate.Date)
+        .Select(g => new { Tarih = g.Key, Sayi = g.Count() })
+        .ToDictionary(k => k.Tarih, v => v.Sayi);
+
+    ViewBag.BlogCounts = blogCounts;
+    return View();
+}
 
     // GÜNLÜK: Blog yazılarının listelendiği yer
     public IActionResult Gunluk()
