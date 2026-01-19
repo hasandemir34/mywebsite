@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore; // - UseNpgsql için gerekli
 using mywebsite.Data; // - AppDbContext'in bulunduğu klasör
+using Microsoft.EntityFrameworkCore; // Entity Framework komutları için
+using mywebsite.Data; // AppDbContext'e ulaşmak için
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -6,6 +6,13 @@ namespace mywebsite.Controllers;
 
 public class HomeController : Controller
 {
+    private readonly ILogger<HomeController> _logger;
+
+    public HomeController(ILogger<HomeController> _logger)
+    {
+        this._logger = _logger;
+    }
+
     public IActionResult Index()
     {
         return View();
@@ -16,9 +23,16 @@ public class HomeController : Controller
         return View();
     }
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    // --- YENİ EKLENEN KISIM BAŞLANGICI ---
+    public IActionResult Projelerim() => View();
+    public IActionResult Gunluk() => View();
+    public IActionResult Hakkimda() => View();
+    // --- YENİ EKLENEN KISIM BİTİŞİ ---
+
+   [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+    // Doğru olan 'Activity.Current?.Id' kullanımıdır
+    return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }

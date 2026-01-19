@@ -1,5 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 
+
+namespace mywebsite.Models; // Bu satır eksik
 public class Blog
 {
     [Key] // Bu alanın Primary Key (Birincil Anahtar) olduğunu belirtir
