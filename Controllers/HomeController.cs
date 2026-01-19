@@ -1,49 +1,37 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using mywebsite.Data;
 using mywebsite.Models;
+using System.Linq;
 
 namespace mywebsite.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
+    private readonly AppDbContext _context;
 
-    public HomeController(ILogger<HomeController> logger)
+    // Veritabanı bağlantısını içeri alıyoruz
+    public HomeController(AppDbContext context)
     {
-        _logger = logger;
+        _context = context;
     }
 
+    // ANASAYFA: Kendini tanıttığın yer
     public IActionResult Index()
     {
         return View();
     }
 
-    public IActionResult Privacy()
-    {
-        return View();
-    }
-
-    public IActionResult Projelerim()
-    {
-        return View();
-    }
-
+    // GÜNLÜK: Blog yazılarının listelendiği yer
     public IActionResult Gunluk()
     {
-        return View();
+        // Yazıları tarihe göre tersten (yeniden eskiye) sıralayıp gönderiyoruz
+        var yazilar = _context.Blogs.OrderByDescending(x => x.CreatedDate).ToList();
+        return View(yazilar);
     }
-
+    
+    // Hakkımda sayfası (İstersen Index ile birleştirebiliriz ama ayrı kalsın dersen)
     public IActionResult Hakkimda()
     {
         return View();
-    }
-
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel 
-        { 
-            RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier 
-        });
     }
 }
