@@ -12,38 +12,44 @@
     </div>
 </div>
 
-<div class="mt-5 p-4 bg-white rounded shadow-sm">
-    <h5 class="mb-3">Yazı Paylaşım Geçmişi</h5>
-    
-    <div class="d-flex flex-wrap gap-1" style="max-width: 800px;">
-        @{
-            var bugun = DateTime.Now.Date;
-            // Son 365 günü döngüye alıyoruz
-            for (int i = 364; i >= 0; i--)
-            {
-                var suanKiTarih = bugun.AddDays(-i);
-                // ViewBag'den bu tarihe ait yazı sayısını kontrol et
-                var counts = ViewBag.BlogCounts as Dictionary<DateTime, int>;
-                int yaziSayisi = (counts != null && counts.ContainsKey(suanKiTarih)) ? counts[suanKiTarih] : 0;
+<div class="row justify-content-center mt-5">
+    <div class="col-md-10 col-lg-9">
+        <div class="p-4 bg-white rounded shadow border">
+            <h5 class="mb-4 text-center fw-bold">Yazı Paylaşım Geçmişi</h5>
+            
+            <div class="d-flex flex-wrap gap-1 justify-content-center mx-auto" style="max-width: 850px;">
+                @{
+                    var bugun = DateTime.Now.Date;
+                    // Performans için cast işlemini döngü dışında yapıyoruz
+                    var counts = ViewBag.BlogCounts as Dictionary<DateTime, int> ?? new Dictionary<DateTime, int>();
 
-                // Yazı sayısına göre renk tonu belirle
-                string renkSinifi = yaziSayisi switch
-                {
-                    0 => "#ebedf0",     // Boş gün
-                    1 => "#9be9a8",     // 1 yazı
-                    2 => "#40c463",     // 2 yazı
-                    _ => "#216e39"      // 3+ yazı
-                };
+                    for (int i = 364; i >= 0; i--)
+                    {
+                        var suanKiTarih = bugun.AddDays(-i);
+                        int yaziSayisi = counts.ContainsKey(suanKiTarih) ? counts[suanKiTarih] : 0;
 
-                <div style="width: 12px; height: 12px; background-color: @renkSinifi; border-radius: 2px;" 
-                     title="@suanKiTarih.ToShortDateString(): @yaziSayisi yazı">
-                </div>
-            }
-        }
+                        // Yazı sayısına göre renk tonları
+                        string renkSinifi = yaziSayisi switch
+                        {
+                            0 => "#ebedf0",
+                            1 => "#9be9a8",
+                            2 => "#40c463",
+                            _ => "#216e39"
+                        };
+
+                        <div style="width: 12px; height: 12px; background-color: @renkSinifi; border-radius: 2px;" 
+                             title="@suanKiTarih.ToShortDateString(): @yaziSayisi yazı">
+                        </div>
+                    }
+                }
+            </div>
+            
+            <div class="mt-3 text-center small text-muted">
+                Son 1 yıla ait paylaşım aktivitesi
+            </div>
+        </div>
     </div>
-    <div class="mt-2 small text-muted">Son 1 yıla ait paylaşım aktivitesi</div>
 </div>
-
 <div class="row mt-5">
     <div class="col-md-4">
         <div class="card border-0 shadow-sm p-3">

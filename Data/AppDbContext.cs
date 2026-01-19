@@ -1,12 +1,11 @@
 using Microsoft.EntityFrameworkCore;
-using mywebsite.Models; // Kendi proje adınla kontrol et
+using mywebsite.Models;
 
-
-namespace mywebsite.Data; // Bu satır eksik
+namespace mywebsite.Data;
 
 public class AppDbContext : DbContext
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-    public DbSet<Blog> Blogs { get; set; } // Veritabanında "Blogs" tablosu oluşturur
+    public DbSet<Blog> Blogs { get; set; }
 }

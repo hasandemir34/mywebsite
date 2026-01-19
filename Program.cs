@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using mywebsite.Data;
 
+
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 var builder = WebApplication.CreateBuilder(args);
 
 // 1. MVC ve Veritabanı Servislerini Ekle

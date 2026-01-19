@@ -18,7 +18,7 @@ public class HomeController : Controller
     // ANASAYFA: Kendini tanıttığın yer
     public IActionResult Index()
 {
-    var startDate = DateTime.Now.Date.AddDays(-364);
+    var startDate = DateTime.UtcNow.Date.AddDays(-364);
     var blogCounts = _context.Blogs
         .Where(x => x.CreatedDate >= startDate)
         .GroupBy(x => x.CreatedDate.Date)
