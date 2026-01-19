@@ -1,12 +1,11 @@
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore; // Bu satır önemli
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using mywebsite.Models;
-using Microsoft.AspNetCore.Identity;
-
 
 namespace mywebsite.Data;
 
-// Sınıfın miras aldığı yeri DbContext yerine IdentityDbContext yapıyoruz
+// Artık sadece DbContext değil, IdentityDbContext kullanıyoruz
 public class AppDbContext : IdentityDbContext<IdentityUser>
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
