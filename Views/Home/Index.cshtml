@@ -1,21 +1,34 @@
 @{
-    ViewData["Title"] = "Anasayfa";
+    ViewData["Title"] = "Hoş Geldiniz";
 }
 
-<div class="text-center mt-5">
-    <h1 class="display-4">Merhaba, Ben Hasan Demir</h1>
-    
-    <p class="lead mt-4">
-        Yazılım geliştirme serüvenimi, öğrendiklerimi ve projelerimi paylaştığım kişisel web siteme hoş geldiniz.
-    </p>
-    
+<div class="text-center py-5">
+    <h1 class="display-4 fw-bold">Merhaba, Ben [Adın]</h1>
+    <p class="lead">Yazılım mühendisliği öğrencisiyim. Burada projelerimi ve öğrendiklerimi paylaşıyorum.</p>
     <hr class="my-4">
-    
-    <p>
-        Güncel çalışmalarımı ve teknik notlarımı incelemek isterseniz blog sayfama göz atabilirsiniz.
-    </p>
-    
-    <a class="btn btn-primary btn-lg mt-3" asp-controller="Home" asp-action="Gunluk" role="button">
-        Günlüğümü Oku
-    </a>
+    <div class="d-flex justify-content-center gap-3">
+        <a href="#" class="btn btn-primary btn-lg">Projelerimi Gör</a>
+        <a href="#" class="btn btn-outline-dark btn-lg">Günlüğü Oku</a>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm p-3">
+            <h3>Teknoloji</h3>
+            <p>Modern web teknolojileri ve veri bilimi üzerine çalışıyorum.</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm p-3">
+            <h3>Günlük</h3>
+            <p>Sürekli öğrenme sürecimi ve günlük notlarımı burada tutuyorum.</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm p-3">
+            <h3>İletişim</h3>
+            <p>Bana LinkedIn veya GitHub üzerinden ulaşabilirsiniz.</p>
+        </div>
+    </div>
 </div>

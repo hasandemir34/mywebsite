@@ -82,8 +82,6 @@ C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\obj\Debug\net10.0\compressed\dlf12i
 C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\obj\Debug\net10.0\compressed\9ujl0081qf-{0}-muycvpuwrr-muycvpuwrr.gz
 C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\obj\Debug\net10.0\compressed\zbyx92jl2x-{0}-87fc7y1x7t-87fc7y1x7t.gz
 C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\obj\Debug\net10.0\compressed\asgkhbgdkd-{0}-mlv21k5csn-mlv21k5csn.gz
-C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\obj\Debug\net10.0\compressed\gn94ludmu1-{0}-ulbfr0tv9z-ulbfr0tv9z.gz
-C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\obj\Debug\net10.0\compressed\13100tzkti-{0}-ulbfr0tv9z-ulbfr0tv9z.gz
 C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\obj\Debug\net10.0\staticwebassets.build.json
 C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\obj\Debug\net10.0\staticwebassets.build.json.cache
 C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\obj\Debug\net10.0\staticwebassets.development.json
@@ -187,3 +185,5 @@ C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\bin\Debug\net10.0\zh-Hans\Microsoft
 C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\bin\Debug\net10.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
 C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\obj\Debug\net10.0\mywebsite.csproj.Up2Date
 C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\obj\Debug\net10.0\compressed\oukl5ne45a-{0}-h3sfzg115u-h3sfzg115u.gz
+C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\obj\Debug\net10.0\compressed\gn94ludmu1-{0}-hu5gm89laa-hu5gm89laa.gz
+C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\obj\Debug\net10.0\compressed\13100tzkti-{0}-hu5gm89laa-hu5gm89laa.gz
