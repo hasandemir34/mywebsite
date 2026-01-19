@@ -1,0 +1,376 @@
+@{
+    ViewData["Title"] = "Projelerim";
+}
+
+<style>
+    .page-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .page-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 1rem;
+    }
+
+    .page-subtitle {
+        color: var(--text-secondary);
+        font-size: 1.1rem;
+    }
+
+    .project-card {
+        background: var(--dark-card);
+        border-radius: 15px;
+        overflow: hidden;
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        transition: all 0.3s ease;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .project-card:hover {
+        transform: translateY(-10px);
+        border-color: var(--primary-color);
+        box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+    }
+
+    .project-image {
+        width: 100%;
+        height: 200px;
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 4rem;
+        color: var(--primary-color);
+    }
+
+    .project-body {
+        padding: 1.5rem;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .project-title {
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 0.8rem;
+        color: var(--text-primary);
+    }
+
+    .project-description {
+        color: var(--text-secondary);
+        margin-bottom: 1rem;
+        flex-grow: 1;
+    }
+
+    .project-tags {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        margin-bottom: 1rem;
+    }
+
+    .project-tag {
+        background: rgba(99, 102, 241, 0.2);
+        color: var(--primary-color);
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 500;
+    }
+
+    .project-links {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .project-link {
+        flex: 1;
+        text-align: center;
+        padding: 0.6rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .link-demo {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+
+    .link-demo:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        color: white;
+    }
+
+    .link-github {
+        background: rgba(99, 102, 241, 0.2);
+        color: var(--primary-color);
+    }
+
+    .link-github:hover {
+        background: rgba(99, 102, 241, 0.3);
+        transform: translateY(-2px);
+    }
+
+    .filter-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+    }
+
+    .filter-btn {
+        background: var(--dark-card);
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        color: var(--text-secondary);
+        padding: 0.6rem 1.5rem;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+        background: var(--primary-color);
+        color: white;
+        border-color: var(--primary-color);
+    }
+</style>
+
+<div class="page-header">
+    <h1 class="page-title">
+        <i class="fas fa-code me-2"></i>Projelerim
+    </h1>
+    <p class="page-subtitle">
+        Geliştirdiğim ve üzerinde çalıştığım projeler
+    </p>
+</div>
+
+<div class="filter-buttons">
+    <button class="filter-btn active" data-filter="all">
+        <i class="fas fa-layer-group me-2"></i>Tümü
+    </button>
+    <button class="filter-btn" data-filter="web">
+        <i class="fas fa-globe me-2"></i>Web
+    </button>
+    <button class="filter-btn" data-filter="mobile">
+        <i class="fas fa-mobile-alt me-2"></i>Mobile
+    </button>
+    <button class="filter-btn" data-filter="ai">
+        <i class="fas fa-robot me-2"></i>AI/ML
+    </button>
+</div>
+
+<div class="row g-4">
+    <!-- Proje 1 -->
+    <div class="col-lg-4 col-md-6 project-item" data-category="web">
+        <div class="project-card">
+            <div class="project-image">
+                <i class="fas fa-blog"></i>
+            </div>
+            <div class="project-body">
+                <h3 class="project-title">Kişisel Blog Platformu</h3>
+                <p class="project-description">
+                    ASP.NET Core ve PostgreSQL kullanarak geliştirdiğim tam özellikli blog platformu.
+                    Kullanıcı yönetimi, içerik düzenleme ve yorum sistemi içerir.
+                </p>
+                <div class="project-tags">
+                    <span class="project-tag">ASP.NET Core</span>
+                    <span class="project-tag">PostgreSQL</span>
+                    <span class="project-tag">Bootstrap</span>
+                </div>
+                <div class="project-links">
+                    <a href="#" class="project-link link-demo">
+                        <i class="fas fa-external-link-alt me-2"></i>Demo
+                    </a>
+                    <a href="https://github.com/hasandemir34" target="_blank" class="project-link link-github">
+                        <i class="fab fa-github me-2"></i>GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Proje 2 -->
+    <div class="col-lg-4 col-md-6 project-item" data-category="web">
+        <div class="project-card">
+            <div class="project-image">
+                <i class="fas fa-shopping-cart"></i>
+            </div>
+            <div class="project-body">
+                <h3 class="project-title">E-Ticaret Platformu</h3>
+                <p class="project-description">
+                    Modern bir e-ticaret sitesi. Ürün yönetimi, sepet sistemi, ödeme entegrasyonu
+                    ve admin paneli içermektedir.
+                </p>
+                <div class="project-tags">
+                    <span class="project-tag">React</span>
+                    <span class="project-tag">Node.js</span>
+                    <span class="project-tag">MongoDB</span>
+                </div>
+                <div class="project-links">
+                    <a href="#" class="project-link link-demo">
+                        <i class="fas fa-external-link-alt me-2"></i>Demo
+                    </a>
+                    <a href="https://github.com/hasandemir34" target="_blank" class="project-link link-github">
+                        <i class="fab fa-github me-2"></i>GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Proje 3 -->
+    <div class="col-lg-4 col-md-6 project-item" data-category="ai">
+        <div class="project-card">
+            <div class="project-image">
+                <i class="fas fa-brain"></i>
+            </div>
+            <div class="project-body">
+                <h3 class="project-title">Görüntü Sınıflandırma AI</h3>
+                <p class="project-description">
+                    TensorFlow ve Python kullanarak geliştirdiğim derin öğrenme modeli.
+                    Görüntüleri yüksek doğrulukla sınıflandırır.
+                </p>
+                <div class="project-tags">
+                    <span class="project-tag">Python</span>
+                    <span class="project-tag">TensorFlow</span>
+                    <span class="project-tag">Keras</span>
+                </div>
+                <div class="project-links">
+                    <a href="#" class="project-link link-demo">
+                        <i class="fas fa-external-link-alt me-2"></i>Demo
+                    </a>
+                    <a href="https://github.com/hasandemir34" target="_blank" class="project-link link-github">
+                        <i class="fab fa-github me-2"></i>GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Proje 4 -->
+    <div class="col-lg-4 col-md-6 project-item" data-category="mobile">
+        <div class="project-card">
+            <div class="project-image">
+                <i class="fas fa-mobile-alt"></i>
+            </div>
+            <div class="project-body">
+                <h3 class="project-title">Görev Yönetimi Uygulaması</h3>
+                <p class="project-description">
+                    React Native ile geliştirilmiş cross-platform mobil uygulama.
+                    Görev oluşturma, düzenleme ve bildirim özellikleri içerir.
+                </p>
+                <div class="project-tags">
+                    <span class="project-tag">React Native</span>
+                    <span class="project-tag">Firebase</span>
+                    <span class="project-tag">Redux</span>
+                </div>
+                <div class="project-links">
+                    <a href="#" class="project-link link-demo">
+                        <i class="fas fa-external-link-alt me-2"></i>Demo
+                    </a>
+                    <a href="https://github.com/hasandemir34" target="_blank" class="project-link link-github">
+                        <i class="fab fa-github me-2"></i>GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Proje 5 -->
+    <div class="col-lg-4 col-md-6 project-item" data-category="web">
+        <div class="project-card">
+            <div class="project-image">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <div class="project-body">
+                <h3 class="project-title">Veri Görselleştirme Paneli</h3>
+                <p class="project-description">
+                    Gerçek zamanlı veri görselleştirme ve analiz platformu.
+                    Dinamik grafikler ve raporlama özellikleri sunar.
+                </p>
+                <div class="project-tags">
+                    <span class="project-tag">Vue.js</span>
+                    <span class="project-tag">D3.js</span>
+                    <span class="project-tag">WebSocket</span>
+                </div>
+                <div class="project-links">
+                    <a href="#" class="project-link link-demo">
+                        <i class="fas fa-external-link-alt me-2"></i>Demo
+                    </a>
+                    <a href="https://github.com/hasandemir34" target="_blank" class="project-link link-github">
+                        <i class="fab fa-github me-2"></i>GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Proje 6 -->
+    <div class="col-lg-4 col-md-6 project-item" data-category="web">
+        <div class="project-card">
+            <div class="project-image">
+                <i class="fas fa-comments"></i>
+            </div>
+            <div class="project-body">
+                <h3 class="project-title">Anlık Mesajlaşma Uygulaması</h3>
+                <p class="project-description">
+                    SignalR kullanarak geliştirdiğim gerçek zamanlı sohbet uygulaması.
+                    Grup sohbetleri ve dosya paylaşımı destekler.
+                </p>
+                <div class="project-tags">
+                    <span class="project-tag">ASP.NET Core</span>
+                    <span class="project-tag">SignalR</span>
+                    <span class="project-tag">TypeScript</span>
+                </div>
+                <div class="project-links">
+                    <a href="#" class="project-link link-demo">
+                        <i class="fas fa-external-link-alt me-2"></i>Demo
+                    </a>
+                    <a href="https://github.com/hasandemir34" target="_blank" class="project-link link-github">
+                        <i class="fab fa-github me-2"></i>GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Project filtering
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const projectItems = document.querySelectorAll('.project-item');
+
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Remove active class from all buttons
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            // Add active class to clicked button
+            button.classList.add('active');
+
+            const filter = button.getAttribute('data-filter');
+
+            projectItems.forEach(item => {
+                if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                    item.style.display = 'block';
+                    item.style.animation = 'fadeInUp 0.5s ease-out';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    });
+</script>

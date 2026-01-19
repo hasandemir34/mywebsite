@@ -8,9 +8,9 @@ public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
 
-    public HomeController(ILogger<HomeController> _logger)
+    public HomeController(ILogger<HomeController> logger)
     {
-        this._logger = _logger;
+        _logger = logger;
     }
 
     public IActionResult Index()
@@ -23,16 +23,27 @@ public class HomeController : Controller
         return View();
     }
 
-    // --- YENİ EKLENEN KISIM BAŞLANGICI ---
-    public IActionResult Projelerim() => View();
-    public IActionResult Gunluk() => View();
-    public IActionResult Hakkimda() => View();
-    // --- YENİ EKLENEN KISIM BİTİŞİ ---
+    public IActionResult Projelerim()
+    {
+        return View();
+    }
 
-   [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public IActionResult Gunluk()
+    {
+        return View();
+    }
+
+    public IActionResult Hakkimda()
+    {
+        return View();
+    }
+
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
-    // Doğru olan 'Activity.Current?.Id' kullanımıdır
-    return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        return View(new ErrorViewModel 
+        { 
+            RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier 
+        });
     }
 }

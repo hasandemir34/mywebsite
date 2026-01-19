@@ -1,0 +1,436 @@
+@{
+    ViewData["Title"] = "Hakkımda";
+}
+
+<style>
+    .about-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .about-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 1rem;
+    }
+
+    .about-intro {
+        max-width: 800px;
+        margin: 0 auto 3rem;
+        padding: 2rem;
+        background: var(--dark-card);
+        border-radius: 15px;
+        border: 1px solid rgba(99, 102, 241, 0.2);
+    }
+
+    .profile-image {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        font-size: 4rem;
+        color: white;
+        border: 4px solid rgba(99, 102, 241, 0.3);
+    }
+
+    .about-text {
+        color: var(--text-secondary);
+        line-height: 1.8;
+        font-size: 1.1rem;
+        text-align: center;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 2rem;
+        text-align: center;
+        color: var(--text-primary);
+    }
+
+    .skill-category {
+        background: var(--dark-card);
+        border-radius: 15px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        transition: all 0.3s ease;
+    }
+
+    .skill-category:hover {
+        border-color: var(--primary-color);
+        box-shadow: 0 5px 20px rgba(99, 102, 241, 0.2);
+    }
+
+    .skill-category-title {
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        color: var(--primary-color);
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+    }
+
+    .skill-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 1rem;
+    }
+
+    .skill-item {
+        background: rgba(99, 102, 241, 0.1);
+        padding: 0.8rem;
+        border-radius: 10px;
+        text-align: center;
+        color: var(--text-primary);
+        font-weight: 500;
+        transition: all 0.3s ease;
+        border: 1px solid transparent;
+    }
+
+    .skill-item:hover {
+        background: rgba(99, 102, 241, 0.2);
+        border-color: var(--primary-color);
+        transform: translateY(-3px);
+    }
+
+    .timeline {
+        position: relative;
+        padding: 2rem 0;
+    }
+
+    .timeline::before {
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+        transform: translateX(-50%);
+    }
+
+    .timeline-item {
+        position: relative;
+        margin-bottom: 3rem;
+        display: flex;
+        align-items: center;
+    }
+
+    .timeline-item:nth-child(odd) {
+        flex-direction: row;
+    }
+
+    .timeline-item:nth-child(even) {
+        flex-direction: row-reverse;
+    }
+
+    .timeline-content {
+        flex: 1;
+        background: var(--dark-card);
+        padding: 1.5rem;
+        border-radius: 15px;
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        margin: 0 2rem;
+        transition: all 0.3s ease;
+    }
+
+    .timeline-content:hover {
+        border-color: var(--primary-color);
+        box-shadow: 0 5px 20px rgba(99, 102, 241, 0.2);
+    }
+
+    .timeline-dot {
+        width: 20px;
+        height: 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 50%;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        border: 4px solid var(--dark-bg);
+        z-index: 2;
+    }
+
+    .timeline-year {
+        font-weight: 600;
+        color: var(--primary-color);
+        margin-bottom: 0.5rem;
+    }
+
+    .timeline-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: var(--text-primary);
+    }
+
+    .timeline-description {
+        color: var(--text-secondary);
+        line-height: 1.6;
+    }
+
+    .interests-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .interest-card {
+        background: var(--dark-card);
+        padding: 2rem;
+        border-radius: 15px;
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .interest-card:hover {
+        border-color: var(--primary-color);
+        transform: translateY(-5px);
+        box-shadow: 0 5px 20px rgba(99, 102, 241, 0.2);
+    }
+
+    .interest-icon {
+        font-size: 3rem;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 1rem;
+    }
+
+    .interest-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: var(--text-primary);
+    }
+
+    .interest-description {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+        .timeline::before {
+            left: 30px;
+        }
+
+        .timeline-item {
+            flex-direction: column !important;
+            align-items: flex-start;
+            padding-left: 60px;
+        }
+
+        .timeline-dot {
+            left: 30px;
+        }
+
+        .timeline-content {
+            margin: 0;
+        }
+    }
+</style>
+
+<div class="about-header">
+    <h1 class="about-title">
+        <i class="fas fa-user me-2"></i>Hakkımda
+    </h1>
+</div>
+
+<div class="about-intro">
+    <div class="profile-image">
+        <i class="fas fa-user"></i>
+    </div>
+    <p class="about-text">
+        Merhaba! Ben <strong>Hasan Demir</strong>, yazılım mühendisliği öğrencisiyim.
+        Modern web teknolojileri, veri bilimi ve yapay zeka alanlarında kendimi geliştiriyorum.
+        Öğrendiğim her yeni konsepti projelerime uygulayarak pratik deneyim kazanıyorum.
+        Açık kaynak projelere katkıda bulunmayı ve bilgilerimi paylaşmayı seviyorum.
+    </p>
+</div>
+
+<h2 class="section-title">
+    <i class="fas fa-code me-2"></i>Teknik Yetenekler
+</h2>
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="skill-category">
+            <h3 class="skill-category-title">
+                <i class="fas fa-laptop-code"></i>
+                Backend Geliştirme
+            </h3>
+            <div class="skill-list">
+                <div class="skill-item">ASP.NET Core</div>
+                <div class="skill-item">C#</div>
+                <div class="skill-item">Node.js</div>
+                <div class="skill-item">Python</div>
+                <div class="skill-item">Entity Framework</div>
+                <div class="skill-item">REST API</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="skill-category">
+            <h3 class="skill-category-title">
+                <i class="fas fa-palette"></i>
+                Frontend Geliştirme
+            </h3>
+            <div class="skill-list">
+                <div class="skill-item">React</div>
+                <div class="skill-item">JavaScript</div>
+                <div class="skill-item">TypeScript</div>
+                <div class="skill-item">HTML5/CSS3</div>
+                <div class="skill-item">Bootstrap</div>
+                <div class="skill-item">Tailwind CSS</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="skill-category">
+            <h3 class="skill-category-title">
+                <i class="fas fa-database"></i>
+                Veritabanı & DevOps
+            </h3>
+            <div class="skill-list">
+                <div class="skill-item">PostgreSQL</div>
+                <div class="skill-item">MongoDB</div>
+                <div class="skill-item">Redis</div>
+                <div class="skill-item">Docker</div>
+                <div class="skill-item">Git</div>
+                <div class="skill-item">Azure</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="skill-category">
+            <h3 class="skill-category-title">
+                <i class="fas fa-brain"></i>
+                AI & Data Science
+            </h3>
+            <div class="skill-list">
+                <div class="skill-item">TensorFlow</div>
+                <div class="skill-item">Keras</div>
+                <div class="skill-item">Pandas</div>
+                <div class="skill-item">NumPy</div>
+                <div class="skill-item">Scikit-learn</div>
+                <div class="skill-item">Matplotlib</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h2 class="section-title mt-5">
+    <i class="fas fa-graduation-cap me-2"></i>Eğitim & Deneyim
+</h2>
+
+<div class="timeline">
+    <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+            <div class="timeline-year">2023 - Devam Ediyor</div>
+            <h4 class="timeline-title">Yazılım Mühendisliği</h4>
+            <p class="timeline-description">
+                Üniversitede yazılım mühendisliği eğitimi alıyorum. Algoritma, veri yapıları,
+                nesne yönelimli programlama ve yazılım mimarisi gibi konularda derinlemesine bilgi edindim.
+            </p>
+        </div>
+    </div>
+
+    <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+            <div class="timeline-year">2024</div>
+            <h4 class="timeline-title">Full-Stack Development Bootcamp</h4>
+            <p class="timeline-description">
+                Yoğun bir bootcamp programına katılarak modern web geliştirme teknolojilerini öğrendim.
+                React, Node.js ve MongoDB kullanarak gerçek dünya projeleri geliştirdim.
+            </p>
+        </div>
+    </div>
+
+    <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+            <div class="timeline-year">2025</div>
+            <h4 class="timeline-title">Açık Kaynak Katkıları</h4>
+            <p class="timeline-description">
+                GitHub üzerinde çeşitli açık kaynak projelere katkıda bulunmaya başladım.
+                Kod incelemeleri, hata düzeltmeleri ve yeni özellik geliştirmeleri yaptım.
+            </p>
+        </div>
+    </div>
+
+    <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+            <div class="timeline-year">2026</div>
+            <h4 class="timeline-title">Kişisel Projeler & Blog</h4>
+            <p class="timeline-description">
+                Kendi projelerimi geliştirmeye ve öğrendiklerimi blog yazılarıyla paylaşmaya başladım.
+                ASP.NET Core ve modern web teknolojileri üzerine yoğunlaştım.
+            </p>
+        </div>
+    </div>
+</div>
+
+<h2 class="section-title mt-5">
+    <i class="fas fa-heart me-2"></i>İlgi Alanlarım
+</h2>
+
+<div class="interests-grid">
+    <div class="interest-card">
+        <div class="interest-icon">
+            <i class="fas fa-robot"></i>
+        </div>
+        <h4 class="interest-title">Yapay Zeka</h4>
+        <p class="interest-description">
+            Machine learning ve deep learning teknolojileri ile ilgileniyorum
+        </p>
+    </div>
+
+    <div class="interest-card">
+        <div class="interest-icon">
+            <i class="fas fa-globe"></i>
+        </div>
+        <h4 class="interest-title">Web Teknolojileri</h4>
+        <p class="interest-description">
+            Modern web frameworkleri ve best practice'leri araştırıyorum
+        </p>
+    </div>
+
+    <div class="interest-card">
+        <div class="interest-icon">
+            <i class="fas fa-mobile-alt"></i>
+        </div>
+        <h4 class="interest-title">Mobil Geliştirme</h4>
+        <p class="interest-description">
+            Cross-platform mobil uygulama geliştirme öğreniyorum
+        </p>
+    </div>
+
+    <div class="interest-card">
+        <div class="interest-icon">
+            <i class="fas fa-book-reader"></i>
+        </div>
+        <h4 class="interest-title">Sürekli Öğrenme</h4>
+        <p class="interest-description">
+            Yeni teknolojileri takip ediyor ve kendimi geliştiriyorum
+        </p>
+    </div>
+</div>

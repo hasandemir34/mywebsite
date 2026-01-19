@@ -1,0 +1,442 @@
+@{
+    ViewData["Title"] = "Günlük";
+}
+
+<style>
+    .blog-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .blog-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 1rem;
+    }
+
+    .blog-subtitle {
+        color: var(--text-secondary);
+        font-size: 1.1rem;
+    }
+
+    .search-box {
+        margin-bottom: 2rem;
+    }
+
+    .search-input {
+        background: var(--dark-card);
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        color: var(--text-primary);
+        padding: 0.8rem 1.5rem;
+        border-radius: 25px;
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+        display: block;
+        transition: all 0.3s ease;
+    }
+
+    .search-input:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        background: rgba(30, 41, 59, 0.8);
+    }
+
+    .search-input::placeholder {
+        color: var(--text-secondary);
+    }
+
+    .blog-post {
+        background: var(--dark-card);
+        border-radius: 15px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .blog-post::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 4px;
+        height: 100%;
+        background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+        transform: scaleY(0);
+        transition: transform 0.3s ease;
+    }
+
+    .blog-post:hover {
+        transform: translateX(10px);
+        border-color: var(--primary-color);
+        box-shadow: 0 5px 20px rgba(99, 102, 241, 0.2);
+    }
+
+    .blog-post:hover::before {
+        transform: scaleY(1);
+    }
+
+    .blog-meta {
+        display: flex;
+        gap: 1.5rem;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+    }
+
+    .meta-item i {
+        color: var(--primary-color);
+    }
+
+    .blog-post-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: var(--text-primary);
+    }
+
+    .blog-post-title:hover {
+        color: var(--primary-color);
+    }
+
+    .blog-excerpt {
+        color: var(--text-secondary);
+        line-height: 1.8;
+        margin-bottom: 1.5rem;
+    }
+
+    .blog-tags {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        margin-bottom: 1rem;
+    }
+
+    .blog-tag {
+        background: rgba(99, 102, 241, 0.2);
+        color: var(--primary-color);
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .blog-tag:hover {
+        background: var(--primary-color);
+        color: white;
+    }
+
+    .read-more {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--primary-color);
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .read-more:hover {
+        gap: 1rem;
+        color: var(--secondary-color);
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-top: 3rem;
+    }
+
+    .page-btn {
+        background: var(--dark-card);
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        color: var(--text-secondary);
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .page-btn:hover,
+    .page-btn.active {
+        background: var(--primary-color);
+        color: white;
+        border-color: var(--primary-color);
+    }
+
+    .featured-post {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+        border-color: var(--primary-color);
+    }
+
+    .featured-badge {
+        display: inline-block;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+</style>
+
+<div class="blog-header">
+    <h1 class="blog-title">
+        <i class="fas fa-book me-2"></i>Yazılım Günlüğüm
+    </h1>
+    <p class="blog-subtitle">
+        Öğrendiklerimi, deneyimlerimi ve düşüncelerimi paylaşıyorum
+    </p>
+</div>
+
+<div class="search-box">
+    <input type="text" class="search-input" placeholder="Yazılarda ara... (örn: React, ASP.NET)">
+</div>
+
+<!-- Öne Çıkan Yazı -->
+<article class="blog-post featured-post">
+    <span class="featured-badge">
+        <i class="fas fa-star me-1"></i>Öne Çıkan
+    </span>
+    
+    <div class="blog-meta">
+        <span class="meta-item">
+            <i class="far fa-calendar"></i>
+            15 Ocak 2026
+        </span>
+        <span class="meta-item">
+            <i class="far fa-clock"></i>
+            8 dk okuma
+        </span>
+        <span class="meta-item">
+            <i class="far fa-eye"></i>
+            234 görüntüleme
+        </span>
+    </div>
+
+    <h2 class="blog-post-title">
+        ASP.NET Core ile Modern Web Uygulaması Geliştirme
+    </h2>
+
+    <div class="blog-tags">
+        <span class="blog-tag">ASP.NET Core</span>
+        <span class="blog-tag">C#</span>
+        <span class="blog-tag">PostgreSQL</span>
+        <span class="blog-tag">Entity Framework</span>
+    </div>
+
+    <p class="blog-excerpt">
+        ASP.NET Core kullanarak modern, ölçeklenebilir ve performanslı web uygulamaları geliştirmenin
+        temel prensiplerini öğrendim. Bu yazıda Entity Framework Core ile veritabanı işlemleri,
+        dependency injection pattern'i ve middleware kavramlarını detaylıca ele alıyorum...
+    </p>
+
+    <a href="#" class="read-more">
+        Devamını Oku <i class="fas fa-arrow-right"></i>
+    </a>
+</article>
+
+<!-- Normal Yazılar -->
+<article class="blog-post">
+    <div class="blog-meta">
+        <span class="meta-item">
+            <i class="far fa-calendar"></i>
+            12 Ocak 2026
+        </span>
+        <span class="meta-item">
+            <i class="far fa-clock"></i>
+            5 dk okuma
+        </span>
+        <span class="meta-item">
+            <i class="far fa-eye"></i>
+            156 görüntüleme
+        </span>
+    </div>
+
+    <h2 class="blog-post-title">
+        React ile State Management: Redux vs Context API
+    </h2>
+
+    <div class="blog-tags">
+        <span class="blog-tag">React</span>
+        <span class="blog-tag">Redux</span>
+        <span class="blog-tag">JavaScript</span>
+    </div>
+
+    <p class="blog-excerpt">
+        React uygulamalarında state yönetimi için kullanılan iki popüler yaklaşımı karşılaştırdım.
+        Redux'un avantajları, Context API'nin kullanım senaryoları ve hangisini ne zaman kullanacağınız
+        hakkında pratik öneriler...
+    </p>
+
+    <a href="#" class="read-more">
+        Devamını Oku <i class="fas fa-arrow-right"></i>
+    </a>
+</article>
+
+<article class="blog-post">
+    <div class="blog-meta">
+        <span class="meta-item">
+            <i class="far fa-calendar"></i>
+            8 Ocak 2026
+        </span>
+        <span class="meta-item">
+            <i class="far fa-clock"></i>
+            6 dk okuma
+        </span>
+        <span class="meta-item">
+            <i class="far fa-eye"></i>
+            189 görüntüleme
+        </span>
+    </div>
+
+    <h2 class="blog-post-title">
+        PostgreSQL Performans Optimizasyonu İpuçları
+    </h2>
+
+    <div class="blog-tags">
+        <span class="blog-tag">PostgreSQL</span>
+        <span class="blog-tag">Database</span>
+        <span class="blog-tag">Performance</span>
+    </div>
+
+    <p class="blog-excerpt">
+        Veritabanı performansını artırmak için öğrendiğim en etkili yöntemler. İndeksleme stratejileri,
+        query optimizasyonu, EXPLAIN ANALYZE kullanımı ve best practice'ler hakkında detaylı bir rehber...
+    </p>
+
+    <a href="#" class="read-more">
+        Devamını Oku <i class="fas fa-arrow-right"></i>
+    </a>
+</article>
+
+<article class="blog-post">
+    <div class="blog-meta">
+        <span class="meta-item">
+            <i class="far fa-calendar"></i>
+            5 Ocak 2026
+        </span>
+        <span class="meta-item">
+            <i class="far fa-clock"></i>
+            7 dk okuma
+        </span>
+        <span class="meta-item">
+            <i class="far fa-eye"></i>
+            203 görüntüleme
+        </span>
+    </div>
+
+    <h2 class="blog-post-title">
+        Clean Code Prensipleri ve SOLID Yaklaşımı
+    </h2>
+
+    <div class="blog-tags">
+        <span class="blog-tag">Clean Code</span>
+        <span class="blog-tag">SOLID</span>
+        <span class="blog-tag">Best Practices</span>
+    </div>
+
+    <p class="blog-excerpt">
+        Sürdürülebilir ve okunabilir kod yazmanın temel prensipleri. SOLID prensiplerine giriş,
+        pratik örnekler ve günlük geliştirmede nasıl uygulayabileceğiniz hakkında kapsamlı bir yazı...
+    </p>
+
+    <a href="#" class="read-more">
+        Devamını Oku <i class="fas fa-arrow-right"></i>
+    </a>
+</article>
+
+<article class="blog-post">
+    <div class="blog-meta">
+        <span class="meta-item">
+            <i class="far fa-calendar"></i>
+            1 Ocak 2026
+        </span>
+        <span class="meta-item">
+            <i class="far fa-clock"></i>
+            4 dk okuma
+        </span>
+        <span class="meta-item">
+            <i class="far fa-eye"></i>
+            145 görüntüleme
+        </span>
+    </div>
+
+    <h2 class="blog-post-title">
+        2026 Yazılım Geliştirme Hedeflerim
+    </h2>
+
+    <div class="blog-tags">
+        <span class="blog-tag">Kişisel Gelişim</span>
+        <span class="blog-tag">Hedefler</span>
+        <span class="blog-tag">Kariyer</span>
+    </div>
+
+    <p class="blog-excerpt">
+        Yeni yılda kendime belirlediğim teknik ve kişisel gelişim hedefleri. Öğrenmek istediğim
+        teknolojiler, tamamlamayı planladığım projeler ve kariyer hedeflerim hakkında...
+    </p>
+
+    <a href="#" class="read-more">
+        Devamını Oku <i class="fas fa-arrow-right"></i>
+    </a>
+</article>
+
+<div class="pagination">
+    <button class="page-btn">
+        <i class="fas fa-chevron-left"></i>
+    </button>
+    <button class="page-btn active">1</button>
+    <button class="page-btn">2</button>
+    <button class="page-btn">3</button>
+    <button class="page-btn">
+        <i class="fas fa-chevron-right"></i>
+    </button>
+</div>
+
+<script>
+    // Search functionality
+    const searchInput = document.querySelector('.search-input');
+    const blogPosts = document.querySelectorAll('.blog-post:not(.featured-post)');
+
+    searchInput.addEventListener('input', (e) => {
+        const searchTerm = e.target.value.toLowerCase();
+
+        blogPosts.forEach(post => {
+            const title = post.querySelector('.blog-post-title').textContent.toLowerCase();
+            const excerpt = post.querySelector('.blog-excerpt').textContent.toLowerCase();
+            const tags = Array.from(post.querySelectorAll('.blog-tag'))
+                .map(tag => tag.textContent.toLowerCase())
+                .join(' ');
+
+            if (title.includes(searchTerm) || excerpt.includes(searchTerm) || tags.includes(searchTerm)) {
+                post.style.display = 'block';
+            } else {
+                post.style.display = 'none';
+            }
+        });
+    });
+</script>

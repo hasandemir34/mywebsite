@@ -1,34 +1,289 @@
 ﻿@{
-    ViewData["Title"] = "Hoş Geldiniz";
+    ViewData["Title"] = "Anasayfa";
 }
 
-<div class="text-center py-5">
-    <h1 class="display-4 fw-bold">Merhaba, Ben [Adın]</h1>
-    <p class="lead">Yazılım mühendisliği öğrencisiyim. Burada projelerimi ve öğrendiklerimi paylaşıyorum.</p>
-    <hr class="my-4">
-    <div class="d-flex justify-content-center gap-3">
-        <a href="#" class="btn btn-primary btn-lg">Projelerimi Gör</a>
-        <a href="#" class="btn btn-outline-dark btn-lg">Günlüğü Oku</a>
+<style>
+    .hero-section {
+        padding: 4rem 0;
+        text-align: center;
+        position: relative;
+    }
+
+    .hero-title {
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1.2;
+    }
+
+    .hero-subtitle {
+        font-size: 1.3rem;
+        color: var(--text-secondary);
+        margin-bottom: 2rem;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .typing-text {
+        font-family: 'JetBrains Mono', monospace;
+        color: var(--primary-color);
+        border-right: 2px solid var(--primary-color);
+        animation: blink 0.7s step-end infinite;
+    }
+
+    @keyframes blink {
+        50% { border-color: transparent; }
+    }
+
+    .cta-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 2rem;
+    }
+
+    .btn-primary-custom {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        padding: 0.8rem 2rem;
+        border-radius: 10px;
+        font-weight: 600;
+        color: white;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-primary-custom:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        color: white;
+    }
+
+    .btn-outline-custom {
+        background: transparent;
+        border: 2px solid var(--primary-color);
+        padding: 0.8rem 2rem;
+        border-radius: 10px;
+        font-weight: 600;
+        color: var(--primary-color);
+        transition: all 0.3s ease;
+    }
+
+    .btn-outline-custom:hover {
+        background: var(--primary-color);
+        color: white;
+        transform: translateY(-3px);
+    }
+
+    .feature-card {
+        background: var(--dark-card);
+        border-radius: 15px;
+        padding: 2rem;
+        height: 100%;
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .feature-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-10px);
+        border-color: var(--primary-color);
+        box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+    }
+
+    .feature-card:hover::before {
+        opacity: 1;
+    }
+
+    .feature-icon {
+        font-size: 3rem;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 1rem;
+        position: relative;
+        z-index: 1;
+    }
+
+    .feature-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        position: relative;
+        z-index: 1;
+    }
+
+    .feature-description {
+        color: var(--text-secondary);
+        position: relative;
+        z-index: 1;
+    }
+
+    .stats-section {
+        margin-top: 4rem;
+        padding: 3rem 0;
+        background: var(--dark-card);
+        border-radius: 15px;
+        border: 1px solid rgba(99, 102, 241, 0.2);
+    }
+
+    .stat-item {
+        text-align: center;
+        padding: 1rem;
+    }
+
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .stat-label {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
+    }
+
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2.5rem;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.1rem;
+        }
+    }
+</style>
+
+<div class="hero-section">
+    <h1 class="hero-title">
+        Merhaba, Ben <br/>
+        <span class="typing-text">Hasan Demir</span>
+    </h1>
+    <p class="hero-subtitle">
+        Yazılım Mühendisliği öğrencisiyim. Modern web teknolojileri ve veri bilimi üzerine çalışıyorum.
+        Burada projelerimi, öğrendiklerimi ve deneyimlerimi paylaşıyorum.
+    </p>
+    
+    <div class="cta-buttons">
+        <a asp-controller="Home" asp-action="Projelerim" class="btn btn-primary-custom">
+            <i class="fas fa-code me-2"></i>Projelerimi Gör
+        </a>
+        <a asp-controller="Home" asp-action="Gunluk" class="btn btn-outline-custom">
+            <i class="fas fa-book me-2"></i>Günlüğü Oku
+        </a>
     </div>
 </div>
 
-<div class="row mt-5">
+<div class="row mt-5 g-4">
     <div class="col-md-4">
-        <div class="card border-0 shadow-sm p-3">
-            <h3>Teknoloji</h3>
-            <p>Modern web teknolojileri ve veri bilimi üzerine çalışıyorum.</p>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-laptop-code"></i>
+            </div>
+            <h3 class="feature-title">Modern Teknolojiler</h3>
+            <p class="feature-description">
+                ASP.NET Core, React, PostgreSQL ve modern web teknolojileri ile 
+                ölçeklenebilir uygulamalar geliştiriyorum.
+            </p>
         </div>
     </div>
+    
     <div class="col-md-4">
-        <div class="card border-0 shadow-sm p-3">
-            <h3>Günlük</h3>
-            <p>Sürekli öğrenme sürecimi ve günlük notlarımı burada tutuyorum.</p>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-book-open"></i>
+            </div>
+            <h3 class="feature-title">Sürekli Öğrenme</h3>
+            <p class="feature-description">
+                Her gün yeni bir şeyler öğreniyor, deneyimlerimi ve notlarımı 
+                günlüğümde düzenli olarak paylaşıyorum.
+            </p>
         </div>
     </div>
+    
     <div class="col-md-4">
-        <div class="card border-0 shadow-sm p-3">
-            <h3>İletişim</h3>
-            <p>Bana LinkedIn veya GitHub üzerinden ulaşabilirsiniz.</p>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-project-diagram"></i>
+            </div>
+            <h3 class="feature-title">Açık Kaynak</h3>
+            <p class="feature-description">
+                GitHub üzerinde açık kaynak projelere katkıda bulunuyor ve 
+                kendi projelerimi geliştiriyorum.
+            </p>
         </div>
     </div>
 </div>
+
+<div class="stats-section">
+    <div class="row">
+        <div class="col-md-3 col-6">
+            <div class="stat-item">
+                <div class="stat-number">15+</div>
+                <div class="stat-label">Tamamlanan Proje</div>
+            </div>
+        </div>
+        <div class="col-md-3 col-6">
+            <div class="stat-item">
+                <div class="stat-number">1000+</div>
+                <div class="stat-label">Kod Satırı</div>
+            </div>
+        </div>
+        <div class="col-md-3 col-6">
+            <div class="stat-item">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Günlük Girişi</div>
+            </div>
+        </div>
+        <div class="col-md-3 col-6">
+            <div class="stat-item">
+                <div class="stat-number">10+</div>
+                <div class="stat-label">Kullanılan Teknoloji</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Typing animation
+    const typingText = document.querySelector('.typing-text');
+    const text = 'Hasan Demir';
+    let index = 0;
+    
+    function type() {
+        if (index < text.length) {
+            typingText.textContent = text.substring(0, index + 1);
+            index++;
+            setTimeout(type, 150);
+        }
+    }
+    
+    // Start typing animation when page loads
+    window.addEventListener('load', () => {
+        setTimeout(type, 500);
+    });
+</script>
