@@ -1,8 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting; // IWebHostEnvironment için şart
-using Microsoft.AspNetCore.Http;    // IFormFile için şart
-using System.IO;                    // Path ve Directory için şart
 using mywebsite.Data;
 using mywebsite.Models;
 
@@ -11,15 +8,14 @@ namespace mywebsite.Controllers;
 public class HomeController : Controller
 {
     private readonly AppDbContext _context;
-    private readonly IWebHostEnvironment _webHostEnvironment;
+    private readonly IWebHostEnvironment _webHostEnvironment; // 1. ADIM: Ortam bilgilerine erişim için bu alanı ekledik
 
     public HomeController(AppDbContext context, IWebHostEnvironment webHostEnvironment)
     {
         _context = context;
-        _webHostEnvironment = webHostEnvironment;
+        _webHostEnvironment = webHostEnvironment; // 2. ADIM: Constructor üzerinden enjekte ettik
     }
 
-    // ANASAYFA
     public IActionResult Index()
     {
         var startDate = DateTime.Now.Date.AddDays(-364);
@@ -34,8 +30,6 @@ public class HomeController : Controller
     }
 
     public IActionResult Hakkimda() => View();
-
-    // --- BLOG İŞLEMLERİ ---
 
     public IActionResult Gunluk()
     {
@@ -61,7 +55,10 @@ public class HomeController : Controller
         {
             if (ImageFile != null && ImageFile.Length > 0)
             {
+                // 3. ADIM: wwwroot/img klasörünün tam yolunu güvenli bir şekilde alıyoruz
                 string uploadDir = Path.Combine(_webHostEnvironment.WebRootPath, "img");
+                
+                // 4. ADIM: Klasör yoksa inşa ediyoruz (Hatanın ana çözümü burası)
                 if (!Directory.Exists(uploadDir)) Directory.CreateDirectory(uploadDir);
 
                 var fileName = Guid.NewGuid().ToString() + Path.GetExtension(ImageFile.FileName);
@@ -74,7 +71,7 @@ public class HomeController : Controller
                 yeniBlog.ImageUrl = "/img/" + fileName;
             }
 
-            yeniBlog.CreatedDate = DateTime.Now; // Yeni yazıya tarih veriyoruz
+            yeniBlog.CreatedDate = DateTime.Now;
             _context.Blogs.Add(yeniBlog);
             _context.SaveChanges();
             return RedirectToAction("Gunluk");
@@ -96,36 +93,29 @@ public class HomeController : Controller
     {
         if (ModelState.IsValid)
         {
-            // KRİTİK DÜZELTME: Mevcut yazıyı veritabanından çekiyoruz ki tarih kaybolmasın!
-            var varOlanBlog = _context.Blogs.Find(guncelBlog.Id);
-            if (varOlanBlog == null) return NotFound();
-
             if (ImageFile != null && ImageFile.Length > 0)
             {
                 string uploadDir = Path.Combine(_webHostEnvironment.WebRootPath, "img");
                 if (!Directory.Exists(uploadDir)) Directory.CreateDirectory(uploadDir);
 
-                // Eski resmi fiziksel olarak siliyoruz
-                if (!string.IsNullOrEmpty(varOlanBlog.ImageUrl))
+                // Eski dosyayı silme işlemi
+                if (!string.IsNullOrEmpty(guncelBlog.ImageUrl))
                 {
-                    var oldPath = Path.Combine(_webHostEnvironment.WebRootPath, varOlanBlog.ImageUrl.TrimStart('/'));
+                    var oldPath = Path.Combine(_webHostEnvironment.WebRootPath, guncelBlog.ImageUrl.TrimStart('/'));
                     if (System.IO.File.Exists(oldPath)) System.IO.File.Delete(oldPath);
                 }
 
                 var fileName = Guid.NewGuid().ToString() + Path.GetExtension(ImageFile.FileName);
                 var newPath = Path.Combine(uploadDir, fileName);
+                
                 using (var stream = new FileStream(newPath, FileMode.Create))
                 {
                     ImageFile.CopyTo(stream);
                 }
-                varOlanBlog.ImageUrl = "/img/" + fileName;
+                guncelBlog.ImageUrl = "/img/" + fileName;
             }
 
-            // Sadece değişen alanları güncelliyoruz, CreatedDate dokunulmaz kalıyor
-            varOlanBlog.Title = guncelBlog.Title;
-            varOlanBlog.Content = guncelBlog.Content;
-
-            _context.Blogs.Update(varOlanBlog);
+            _context.Blogs.Update(guncelBlog);
             _context.SaveChanges();
             return RedirectToAction("Gunluk");
         }
@@ -150,7 +140,6 @@ public class HomeController : Controller
         return RedirectToAction("Gunluk");
     }
 
-    // --- PROJE İŞLEMLERİ ---
     public IActionResult Projelerim() => View(_context.Projects.ToList());
     public IActionResult ProjeDetay(int id) => View(_context.Projects.Find(id));
 }
