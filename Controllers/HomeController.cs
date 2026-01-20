@@ -29,7 +29,42 @@ public class HomeController : Controller
         return View();
     }
 
-    public IActionResult Hakkimda() => View();
+        public IActionResult Hakkimda() 
+    {
+        // Veritabanındaki ilk (ve tek) hakkımda kaydını çekiyoruz
+        var about = _context.Abouts.FirstOrDefault();
+        return View(about);
+    }
+
+    [Authorize]
+    public IActionResult HakkimdaGuncelle()
+    {
+        var about = _context.Abouts.FirstOrDefault();
+        return View(about);
+    }
+
+    [HttpPost]
+    [Authorize]
+    public IActionResult HakkimdaGuncelle(About model)
+    {
+        if (ModelState.IsValid)
+        {
+            var existing = _context.Abouts.FirstOrDefault();
+            if (existing == null) {
+                _context.Abouts.Add(model);
+            } else {
+                existing.FullName = model.FullName;
+                existing.Title = model.Title;
+                existing.University = model.University;
+                existing.Description = model.Description;
+                existing.Skills = model.Skills;
+                _context.Abouts.Update(existing);
+            }
+            _context.SaveChanges();
+            return RedirectToAction("Hakkimda");
+        }
+        return View(model);
+    }
 
     public IActionResult Gunluk()
     {
@@ -123,6 +158,25 @@ public class HomeController : Controller
     }
 
     [Authorize]
+public IActionResult ProjeEkle() 
+{
+    return View();
+}
+
+    [HttpPost]
+    [Authorize]
+    public IActionResult ProjeEkle(Project yeniProje)
+    {
+        if (ModelState.IsValid)
+        {
+            _context.Projects.Add(yeniProje);
+            _context.SaveChanges();
+            return RedirectToAction("Projelerim");
+        }
+        return View(yeniProje);
+    }
+
+    [Authorize]
     public IActionResult BlogSil(int id)
     {
         var silinecekBlog = _context.Blogs.Find(id);
@@ -139,6 +193,44 @@ public class HomeController : Controller
         }
         return RedirectToAction("Gunluk");
     }
+
+        [Authorize]
+    public IActionResult ProjeGuncelle(int id)
+    {
+        // Düzenlenecek projeyi veritabanından buluyoruz
+        var proje = _context.Projects.Find(id);
+        if (proje == null) return NotFound();
+        return View(proje);
+    }
+
+    [HttpPost]
+    [Authorize]
+    public IActionResult ProjeGuncelle(Project guncelProje)
+    {
+        if (ModelState.IsValid)
+        {
+            // View tarafında <input type="hidden" asp-for="Id" /> kullandığın için 
+            // ID otomatik olarak buraya gelecek.
+            _context.Projects.Update(guncelProje);
+            _context.SaveChanges();
+            return RedirectToAction("Projelerim");
+        }
+        return View(guncelProje);
+    }
+
+    [Authorize]
+    public IActionResult ProjeSil(int id)
+    {
+        var silinecekProje = _context.Projects.Find(id);
+        if (silinecekProje != null)
+        {
+            _context.Projects.Remove(silinecekProje);
+            _context.SaveChanges();
+        }
+        return RedirectToAction("Projelerim");
+    }
+
+
 
     public IActionResult Projelerim() => View(_context.Projects.ToList());
     public IActionResult ProjeDetay(int id) => View(_context.Projects.Find(id));

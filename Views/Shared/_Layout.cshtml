@@ -12,6 +12,14 @@
         body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; }
         .navbar { box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .footer { background: #343a40; color: white; padding: 2rem 0; margin-top: 3rem; }
+        .footer a {
+                text-decoration: none !important; /* Alt çizgiyi kaldırır */
+                transition: opacity 0.3s; /* Hover efekti için yumuşak geçiş */
+            }
+
+            .footer a:hover {
+                opacity: 0.8; /* Üzerine gelince hafif şeffaflık vererek etkileşim hissi yaratır */
+            }
     </style>
 </head>
 <body>
@@ -32,6 +40,13 @@
                 @if (User.Identity.IsAuthenticated)
                 {
                     <li class="nav-item">
+                            <a class="nav-link text-warning fw-bold" asp-controller="Home" asp-action="HakkimdaGuncelle">
+                                <i class="fas fa-user-edit me-1"></i>Hakkımda Düzenle
+                            </a>
+                        </li>
+
+
+                    <li class="nav-item">
                         <a class="nav-link text-warning fw-bold" asp-controller="Home" asp-action="ProjeEkle">
                             <i class="fas fa-plus-circle me-1"></i>Proje Ekle
                         </a>
@@ -41,6 +56,7 @@
                             <i class="fas fa-pen-nib me-1"></i>Yazı Ekle
                         </a>
                     </li>
+
                 }
             </ul>
 
@@ -74,7 +90,7 @@
         
         <hr class="bg-secondary w-25 mx-auto">
         
-        <span class="text-white small">&copy; @DateTime.Now.Year - Tasarım ve Kodlama: Hasan Demir</span>
+        <span class="text-white small">&copy; @DateTime.Now.Year - Tüm hakları saklıdır.</span>
     </div>
     </footer>
 

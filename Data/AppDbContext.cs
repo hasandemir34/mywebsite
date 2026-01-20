@@ -12,4 +12,5 @@ public class AppDbContext : IdentityDbContext<IdentityUser>
 
     public DbSet<Blog> Blogs { get; set; }
     public DbSet<Project> Projects { get; set; } // Bu satırı ekle
+    public DbSet<About> Abouts { get; set; }
 }
