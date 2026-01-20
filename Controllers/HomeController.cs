@@ -53,4 +53,12 @@ public class HomeController : Controller
     }
 
     public IActionResult Hakkimda() => View();
+
+
+    public IActionResult Projelerim()
+    {
+        var projeler = _context.Projects.ToList();
+        return View(projeler);
+        
+    }
 }
