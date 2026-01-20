@@ -14,6 +14,8 @@ public class HomeController : Controller
         _context = context;
     }
 
+    // --- GENEL SAYFALAR ---
+
     // ANASAYFA: Grafik verilerini çeker
     public IActionResult Index()
     {
@@ -28,128 +30,58 @@ public class HomeController : Controller
         return View();
     }
 
+    public IActionResult Hakkimda() => View();
+
+    // --- BLOG İŞLEMLERİ (CRUD) ---
+
     public IActionResult Gunluk()
     {
         var yazilar = _context.Blogs.OrderByDescending(x => x.CreatedDate).ToList();
         return View(yazilar);
     }
 
-    // SADECE GİRİŞ YAPANLAR (ADMİN) YAZI EKLEYEBİLİR
-    [Authorize]
-    public IActionResult BlogEkle() => View();
-
-    [HttpPost]
-    [Authorize]
-    public IActionResult BlogEkle(Blog yeniBlog, IFormFile? ImageFile)
-    {
-        if (ModelState.IsValid)
-        {
-            if (ImageFile != null && ImageFile.Length > 0)
-            {
-                // 1. Dosya adını benzersiz yap
-                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(ImageFile.FileName);
-                // 2. Kaydedilecek yolu belirle (wwwroot/img klasörü olmalı)
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img", fileName);
-                
-                // 3. Dosyayı fiziksel olarak kaydet
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    ImageFile.CopyTo(stream);
-                }
-                // 4. Veritabanı modeline resim yolunu ata
-                yeniBlog.ImageUrl = "/img/" + fileName;
-            }
-
-            yeniBlog.CreatedDate = DateTime.Now;
-            _context.Blogs.Add(yeniBlog);
-            _context.SaveChanges();
-            return RedirectToAction("Gunluk");
-        }
-        return View(yeniBlog);
-    }
-
-    public IActionResult Hakkimda() => View();
-
-
-    public IActionResult Projelerim()
-    {
-        var projeler = _context.Projects.ToList();
-        return View(projeler);
-        
-    }
-
-    public IActionResult ProjeDetay(int id)
-    {
-        var proje = _context.Projects.FirstOrDefault(x => x.Id == id);
-    if (proje == null)
-    {
-        return NotFound();
-    }
-        return View(proje);
-    }
-
-
-    // 1. Sayfayı Görüntüleme (GET)
-    [Authorize]
-    public IActionResult ProjeEkle() => View();
-
-    // 2. Projeyi Veri Tabanına Kaydetme (POST)
-    [HttpPost]
-    [Authorize]
-    public IActionResult ProjeEkle(Project yeniProje)
-    {
-    if (ModelState.IsValid)
-    {
-        _context.Projects.Add(yeniProje);
-        _context.SaveChanges();
-        return RedirectToAction("Projelerim");
-    }
-    return View(yeniProje);
-    }
-    
-    // HomeController.cs içine eklenecek
     public IActionResult BlogDetay(int id)
     {
         var blog = _context.Blogs.FirstOrDefault(x => x.Id == id);
-        if (blog == null)
-        {
-            return NotFound();
-        }
+        if (blog == null) return NotFound();
         return View(blog);
     }
-    // --- PROJE GÜNCELLEME VE SİLME ---
-
-[Authorize]
-public IActionResult ProjeGuncelle(int id)
-{
-    var proje = _context.Projects.Find(id);
-    if (proje == null) return NotFound();
-    return View(proje);
-}
-
-[HttpPost] [Authorize]
-public IActionResult ProjeGuncelle(Project model)
-{
-    if (ModelState.IsValid) {
-        _context.Update(model);
-        _context.SaveChanges();
-        return RedirectToAction("Projelerim");
-    }
-    return View(model);
-}
 
     [Authorize]
-    public IActionResult ProjeSil(int id)
-    {
-        var proje = _context.Projects.Find(id);
-        if (proje != null) {
-            _context.Projects.Remove(proje);
-            _context.SaveChanges();
-        }
-        return RedirectToAction("Projelerim");
-    }
+    public IActionResult BlogEkle() => View();
 
-    // --- BLOG GÜNCELLEME VE SİLME ---
+   [HttpPost]
+[Authorize]
+public IActionResult BlogEkle(Blog yeniBlog, IFormFile? ImageFile)
+{
+    if (ModelState.IsValid)
+    {
+        // --- 1. RESİM YÜKLEME İŞLEMİ ---
+        if (ImageFile != null && ImageFile.Length > 0)
+        {
+            var fileName = Guid.NewGuid().ToString() + Path.GetExtension(ImageFile.FileName);
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img", fileName);
+            
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                ImageFile.CopyTo(stream);
+            }
+            yeniBlog.ImageUrl = "/img/" + fileName;
+        }
+
+        // --- 2. TARİH VE SLUG OLUŞTURMA ---
+        yeniBlog.CreatedDate = DateTime.Now;
+        
+        // Yeni eklediğimiz kısım: Başlıktan URL (Slug) üretir
+        yeniBlog.Slug = GenerateSlug(yeniBlog.Title);
+
+        // --- 3. KAYIT ---
+        _context.Blogs.Add(yeniBlog);
+        _context.SaveChanges();
+        return RedirectToAction("Gunluk");
+    }
+    return View(yeniBlog);
+}
 
     [Authorize]
     public IActionResult BlogGuncelle(int id)
@@ -159,55 +91,148 @@ public IActionResult ProjeGuncelle(Project model)
         return View(blog);
     }
 
-    [HttpPost] [Authorize]
-    public IActionResult BlogGuncelle(Blog model)
-    {
-        if (ModelState.IsValid) {
-            _context.Update(model);
-            _context.SaveChanges();
-            return RedirectToAction("Gunluk");
-        }
-        return View(model);
-    }
-
-    [Authorize]
-    public IActionResult BlogSil(int id)
-    {
-        var blog = _context.Blogs.Find(id);
-        if (blog != null) {
-            _context.Blogs.Remove(blog);
-            _context.SaveChanges();
-        }
-        return RedirectToAction("Gunluk");
-    }
-
-    [HttpPost]
+   [HttpPost]
 [Authorize]
 public IActionResult BlogGuncelle(Blog guncelBlog, IFormFile? ImageFile)
 {
     if (ModelState.IsValid)
     {
-        if (ImageFile != null)
+        // --- 1. RESİM GÜNCELLEME İŞLEMİ ---
+        if (ImageFile != null && ImageFile.Length > 0)
         {
-            // 1. ESKİ RESMİ SİL: Sunucuda yer kaplamasın
+            // A. ESKİ RESMİ SİL (Sunucuda yer kaplamasın)
             if (!string.IsNullOrEmpty(guncelBlog.ImageUrl))
             {
-                var oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", guncelBlog.ImageUrl.TrimStart('/'));
-                if (System.IO.File.Exists(oldFilePath)) System.IO.File.Delete(oldFilePath);
+                var oldPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", guncelBlog.ImageUrl.TrimStart('/'));
+                if (System.IO.File.Exists(oldPath)) System.IO.File.Delete(oldPath);
             }
 
-            // 2. YENİ RESMİ YÜKLE
+            // B. YENİ RESMİ KAYDET
             var fileName = Guid.NewGuid().ToString() + Path.GetExtension(ImageFile.FileName);
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img", fileName);
-            using (var stream = new FileStream(path, FileMode.Create)) { ImageFile.CopyTo(stream); }
+            var newPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img", fileName);
+            using (var stream = new FileStream(newPath, FileMode.Create))
+            {
+                ImageFile.CopyTo(stream);
+            }
             guncelBlog.ImageUrl = "/img/" + fileName;
         }
 
+        // --- 2. SLUG (URL) GÜNCELLEME ---
+        // Başlık değişmiş olabilir, URL'i de güncelliyoruz
+        guncelBlog.Slug = GenerateSlug(guncelBlog.Title);
+
+        // --- 3. KAYIT ---
         _context.Blogs.Update(guncelBlog);
         _context.SaveChanges();
         return RedirectToAction("Gunluk");
     }
     return View(guncelBlog);
+}
+    [Authorize]
+    public IActionResult BlogSil(int id)
+    {
+        var silinecekBlog = _context.Blogs.Find(id);
+        if (silinecekBlog != null)
+        {
+            // 1. Önce sunucudaki resmi sil
+            if (!string.IsNullOrEmpty(silinecekBlog.ImageUrl))
+            {
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", silinecekBlog.ImageUrl.TrimStart('/'));
+                if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.Delete(filePath);
+                }
+            }
+
+            // 2. Sonra veritabanından sil
+            _context.Blogs.Remove(silinecekBlog);
+            _context.SaveChanges();
+        }
+        return RedirectToAction("Gunluk");
+    }
+
+    // --- PROJE İŞLEMLERİ ---
+
+    public IActionResult Projelerim()
+    {
+        var projeler = _context.Projects.ToList();
+        return View(projeler);
+    }
+
+    public IActionResult ProjeDetay(int id)
+    {
+        var proje = _context.Projects.FirstOrDefault(x => x.Id == id);
+        if (proje == null) return NotFound();
+        return View(proje);
+    }
+
+    [Authorize]
+    public IActionResult ProjeEkle() => View();
+
+    [HttpPost]
+    [Authorize]
+    public IActionResult ProjeEkle(Project yeniProje)
+    {
+        if (ModelState.IsValid)
+        {
+            _context.Projects.Add(yeniProje);
+            _context.SaveChanges();
+            return RedirectToAction("Projelerim");
+        }
+        return View(yeniProje);
+    }
+
+    [Authorize]
+    public IActionResult ProjeGuncelle(int id)
+    {
+        var proje = _context.Projects.Find(id);
+        if (proje == null) return NotFound();
+        return View(proje);
+    }
+
+    [HttpPost] 
+    [Authorize]
+    public IActionResult ProjeGuncelle(Project model)
+    {
+        if (ModelState.IsValid) 
+        {
+            _context.Update(model);
+            _context.SaveChanges();
+            return RedirectToAction("Projelerim");
+        }
+        return View(model);
+    }
+
+    [Authorize]
+    public IActionResult ProjeSil(int id)
+    {
+        var proje = _context.Projects.Find(id);
+        if (proje != null) 
+        {
+            _context.Projects.Remove(proje);
+            _context.SaveChanges();
+        }
+        return RedirectToAction("Projelerim");
+    }
+
+    // Bu fonksiyonu HomeController class'ının en altına yapıştır
+private string GenerateSlug(string title)
+{
+    if (string.IsNullOrEmpty(title)) return "";
+
+    // 1. Türkçe karakterleri dönüştür
+    string slug = title.ToLowerInvariant();
+    slug = slug.Replace("ı", "i").Replace("ö", "o").Replace("ü", "u")
+               .Replace("ş", "s").Replace("ğ", "g").Replace("ç", "c");
+
+    // 2. Geçersiz karakterleri sil, boşlukları tire yap
+    slug = System.Text.RegularExpressions.Regex.Replace(slug, @"[^a-z0-9\s-]", "");
+    slug = System.Text.RegularExpressions.Regex.Replace(slug, @"\s+", "-").Trim();
+
+    // 3. Çoklu tireleri temizle
+    slug = System.Text.RegularExpressions.Regex.Replace(slug, @"-+", "-");
+
+    return slug;
 }
 
 
