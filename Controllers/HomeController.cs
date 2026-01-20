@@ -180,4 +180,38 @@ public IActionResult ProjeGuncelle(Project model)
         }
         return RedirectToAction("Gunluk");
     }
+
+    [HttpPost]
+[Authorize]
+public IActionResult BlogGuncelle(Blog guncelBlog, IFormFile? ImageFile)
+{
+    if (ModelState.IsValid)
+    {
+        if (ImageFile != null)
+        {
+            // 1. ESKİ RESMİ SİL: Sunucuda yer kaplamasın
+            if (!string.IsNullOrEmpty(guncelBlog.ImageUrl))
+            {
+                var oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", guncelBlog.ImageUrl.TrimStart('/'));
+                if (System.IO.File.Exists(oldFilePath)) System.IO.File.Delete(oldFilePath);
+            }
+
+            // 2. YENİ RESMİ YÜKLE
+            var fileName = Guid.NewGuid().ToString() + Path.GetExtension(ImageFile.FileName);
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img", fileName);
+            using (var stream = new FileStream(path, FileMode.Create)) { ImageFile.CopyTo(stream); }
+            guncelBlog.ImageUrl = "/img/" + fileName;
+        }
+
+        _context.Blogs.Update(guncelBlog);
+        _context.SaveChanges();
+        return RedirectToAction("Gunluk");
+    }
+    return View(guncelBlog);
+}
+
+
+
+
+
 }
