@@ -7,8 +7,8 @@
     <p class="lead">Yazılım mühendisliği öğrencisiyim. Burada projelerimi ve öğrendiklerimi paylaşıyorum.</p>
     <hr class="my-4">
     <div class="d-flex justify-content-center gap-3">
-        <a href="#" class="btn btn-primary btn-lg">Projelerimi Gör</a>
-        <a href="#" class="btn btn-outline-dark btn-lg">Blog Sayfam</a>
+        <a asp-action="Projelerim" class="btn btn-primary btn-lg">Projelerimi Gör</a>
+        <a asp-action="Gunluk" class="btn btn-outline-dark btn-lg">Blog Sayfam</a>
     </div>
 </div>
 
@@ -20,7 +20,6 @@
             <div class="d-flex flex-wrap gap-1 justify-content-center mx-auto" style="max-width: 850px;">
                 @{
                     var bugun = DateTime.Now.Date;
-                    // Performans için cast işlemini döngü dışında yapıyoruz
                     var counts = ViewBag.BlogCounts as Dictionary<DateTime, int> ?? new Dictionary<DateTime, int>();
 
                     for (int i = 364; i >= 0; i--)
@@ -37,7 +36,7 @@
                             _ => "#216e39"
                         };
 
-                        <div style="width: 12px; height: 12px; background-color: @renkSinifi; border-radius: 2px;" 
+                        <div style="width: 12px; height: 12px; background-color: @renkSinifi; border-radius: 2px;"
                              title="@suanKiTarih.ToShortDateString(): @yaziSayisi yazı">
                         </div>
                     }
@@ -50,6 +49,7 @@
         </div>
     </div>
 </div>
+
 <div class="row mt-5">
     <div class="col-md-4">
         <div class="card border-0 shadow-sm p-3">
