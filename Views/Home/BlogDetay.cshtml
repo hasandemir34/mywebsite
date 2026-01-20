@@ -16,6 +16,15 @@
             </nav>
 
             <article class="blog-post card shadow-sm border-0 p-4 p-lg-5">
+                
+                @* 1. ADIM: Kapak Fotoğrafı Görüntüleme *@
+                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                {
+                    <div class="text-center mb-4">
+                        <img src="@Model.ImageUrl" class="img-fluid rounded shadow-sm" style="max-height: 400px; width: 100%; object-fit: cover;" alt="@Model.Title">
+                    </div>
+                }
+
                 <header class="mb-4 border-bottom pb-3">
                     <h1 class="display-5 fw-bold text-dark">@Model.Title</h1>
                     <div class="text-muted small mt-2">
@@ -25,14 +34,26 @@
                     </div>
                 </header>
 
-                <section class="blog-content lead" style="white-space: pre-line; line-height: 1.8; color: #333;">
-                    @Model.Content
+                @* 2. ADIM: HTML İçeriği Görüntüleme (CKEditor için kritik) *@
+                <section class="blog-content lead" style="line-height: 1.8; color: #333;">
+                    @* Html.Raw kullanmazsak HTML etiketleri yazı olarak görünür *@
+                    @Html.Raw(Model.Content)
                 </section>
 
                 <footer class="mt-5 pt-4 border-top">
-                    <a asp-action="Gunluk" class="btn btn-outline-primary">
-                        <i class="fas fa-arrow-left me-2"></i>Diğer Yazılara Göz At
-                    </a>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a asp-action="Gunluk" class="btn btn-outline-primary">
+                            <i class="fas fa-arrow-left me-2"></i>Diğer Yazılara Göz At
+                        </a>
+
+                        @* Admin ise burada da düzenleme butonu görebilir *@
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            <a asp-action="BlogGuncelle" asp-route-id="@Model.Id" class="btn btn-warning">
+                                <i class="fas fa-edit me-2"></i>Yazıyı Düzenle
+                            </a>
+                        }
+                    </div>
                 </footer>
             </article>
         </div>

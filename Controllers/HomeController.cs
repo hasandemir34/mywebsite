@@ -40,10 +40,26 @@ public class HomeController : Controller
 
     [HttpPost]
     [Authorize]
-    public IActionResult BlogEkle(Blog yeniBlog)
+    public IActionResult BlogEkle(Blog yeniBlog, IFormFile? ImageFile)
     {
         if (ModelState.IsValid)
         {
+            if (ImageFile != null && ImageFile.Length > 0)
+            {
+                // 1. Dosya adını benzersiz yap
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(ImageFile.FileName);
+                // 2. Kaydedilecek yolu belirle (wwwroot/img klasörü olmalı)
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img", fileName);
+                
+                // 3. Dosyayı fiziksel olarak kaydet
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    ImageFile.CopyTo(stream);
+                }
+                // 4. Veritabanı modeline resim yolunu ata
+                yeniBlog.ImageUrl = "/img/" + fileName;
+            }
+
             yeniBlog.CreatedDate = DateTime.Now;
             _context.Blogs.Add(yeniBlog);
             _context.SaveChanges();

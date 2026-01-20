@@ -32,3 +32,13 @@
         </div>
     </div>
 </div>
+@section Scripts {
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#Content')) // Blog modelindeki Content alanı
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+}
