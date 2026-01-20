@@ -1,0 +1,54 @@
+@model mywebsite.Models.Project
+
+@{
+    ViewData["Title"] = "Yeni Proje Ekle";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm border-0 p-4">
+            <h2 class="mb-4 text-primary"><i class="fas fa-plus-circle me-2"></i>Yeni Proje Ekle</h2>
+            
+            <form asp-action="ProjeEkle" method="post">
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Proje Adı</label>
+                    <input asp-for="Title" class="form-control" placeholder="Örn: Portfolyo Sitesi" required />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Kategori</label>
+                    <select asp-for="Category" class="form-select" required>
+                        <option value="">Seçiniz...</option>
+                        <option value="web">Web Geliştirme</option>
+                        <option value="mobile">Mobil Uygulama</option>
+                        <option value="ai">AI / ML</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Kısa Açıklama (Kartta görünecek)</label>
+                    <input asp-for="Description" class="form-control" placeholder="Projenin kısa özeti..." required />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Kullanılan Teknolojiler</label>
+                    <input asp-for="Technologies" class="form-control" placeholder="C#, ASP.NET Core, Python (Virgülle ayırın)" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">GitHub Linki</label>
+                    <input asp-for="GithubLink" class="form-control" placeholder="https://github.com/..." />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Proje Detaylı İçeriği (Detay sayfasında görünecek)</label>
+                    <textarea asp-for="Content" class="form-control" rows="8" placeholder="Proje hakkında detaylı bilgi verin..."></textarea>
+                </div>
+
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary btn-lg">Projeyi Yayınla</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

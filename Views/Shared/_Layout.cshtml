@@ -17,43 +17,64 @@
 <body>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav me-auto">
-        <li class="nav-item"><a class="nav-link text-white" asp-controller="Home" asp-action="Index">Anasayfa</a></li>
-        <li class="nav-item"><a class="nav-link text-white" asp-controller="Home" asp-action="Projelerim">Projelerim</a></li>
-        <li class="nav-item"><a class="nav-link text-white" asp-controller="Home" asp-action="Gunluk">Blog</a></li>
-        <li class="nav-item"><a class="nav-link text-white" asp-controller="Home" asp-action="Hakkimda">Hakkımda</a></li>
-    </ul>
+      <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item"><a class="nav-link text-white" asp-controller="Home" asp-action="Index">Anasayfa</a></li>
+                <li class="nav-item"><a class="nav-link text-white" asp-controller="Home" asp-action="Projelerim">Projelerim</a></li>
+                <li class="nav-item"><a class="nav-link text-white" asp-controller="Home" asp-action="Gunluk">Blog</a></li>
+                <li class="nav-item"><a class="nav-link text-white" asp-controller="Home" asp-action="Hakkimda">Hakkımda</a></li>
 
-    <partial name="_LoginPartial" />
-</div>
+                @* Admin Girişi Yapılmışsa Görünecek Kısımlar *@
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-warning fw-bold" asp-controller="Home" asp-action="ProjeEkle">
+                            <i class="fas fa-plus-circle me-1"></i>Proje Ekle
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-warning fw-bold" asp-controller="Home" asp-action="BlogEkle">
+                            <i class="fas fa-pen-nib me-1"></i>Yazı Ekle
+                        </a>
+                    </li>
+                }
+            </ul>
+
+            <partial name="_LoginPartial" />
+        </div>
+      </div>
     </nav>
 
     <div class="container mt-5" style="min-height: 80vh;">
         <main role="main" class="pb-3">
-            @RenderBody() </main>
+            @RenderBody() 
+        </main>
     </div>
 
    <footer class="footer">
     <div class="container text-center">
         <div class="mb-3">
-    <a href="https://github.com/hasandemir34" target="_blank" class="text-white mx-3 fs-4">
-        <i class="fab fa-github"></i>
-    </a>
-    <a href="https://linkedin.com/in/kullaniciadin" target="_blank" class="text-white mx-3 fs-4">
-        <i class="fab fa-linkedin"></i>
-    </a>
-    <a href="https://instagram.com/kullaniciadin" target="_blank" class="text-white mx-3 fs-4">
-        <i class="fab fa-instagram"></i>
-    </a>
-    <a href="mailto:eposta@adresin.com" class="text-white mx-3 fs-4">
-        <i class="fas fa-envelope"></i>
-    </a>
-    </div>
+            <a href="https://github.com/hasandemir34" target="_blank" class="text-white mx-3 fs-4">
+                <i class="fab fa-github"></i>
+            </a>
+            <a href="https://linkedin.com/in/hasandemir34" target="_blank" class="text-white mx-3 fs-4">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="https://instagram.com/hasandemir34" target="_blank" class="text-white mx-3 fs-4">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="mailto:hasan@demir.com" class="text-white mx-3 fs-4">
+                <i class="fas fa-envelope"></i>
+            </a>
+        </div>
         
         <hr class="bg-secondary w-25 mx-auto">
         
-        <span class="text-white small">&copy; @DateTime.Now.Year - Tasarım ve Kodlama: [Adın Soyadın]</span>
+        <span class="text-white small">&copy; @DateTime.Now.Year - Tasarım ve Kodlama: Hasan Demir</span>
     </div>
     </footer>
 

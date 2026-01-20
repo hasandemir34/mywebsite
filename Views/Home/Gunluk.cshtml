@@ -28,7 +28,10 @@
                             </p>
                         </div>
                         <div class="card-footer bg-transparent border-0 p-4 pt-0">
-                            <a href="#" class="btn btn-outline-primary btn-sm rounded-pill px-4">Devamını Oku</a>
+                            @* 3. ADIM: Buton Linkini Aktif Ettik *@
+                            <a asp-action="BlogDetay" asp-route-id="@yazi.Id" class="btn btn-outline-primary btn-sm rounded-pill px-4">
+                                Devamını Oku
+                            </a>
                         </div>
                     </div>
                 </div>

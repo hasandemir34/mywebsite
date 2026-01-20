@@ -3,8 +3,10 @@ namespace mywebsite.Models;
 public class Project
 {
     public int Id { get; set; }
-    public string Title { get; set; } // Proje Adı
-    public string Description { get; set; } // Açıklama
-    public string? GithubLink { get; set; } // GitHub Linki (Opsiyonel)
-    public string? Technologies { get; set; } // Kullanılan Teknolojiler (C#, Python vb.)
+    public string Title { get; set; }
+    public string Description { get; set; }
+    public string? GithubLink { get; set; }
+    public string? Technologies { get; set; }
+    public string? Category { get; set; } // Bu satırı ekle (web, mobile veya ai değerlerini alacak)
+    public string? Content { get; set; }
 }

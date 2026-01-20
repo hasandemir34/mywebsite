@@ -1,3 +1,5 @@
+@model IEnumerable<mywebsite.Models.Project>
+
 @{
     ViewData["Title"] = "Projelerim";
 }
@@ -90,6 +92,7 @@
     .project-links {
         display: flex;
         gap: 1rem;
+        flex-wrap: wrap; /* Butonlar sığmazsa alt satıra geçsin */
     }
 
     .project-link {
@@ -147,6 +150,17 @@
         color: white;
         border-color: var(--primary-color);
     }
+
+    @@keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
 </style>
 
 <div class="page-header">
@@ -174,197 +188,71 @@
 </div>
 
 <div class="row g-4">
-    <!-- Proje 1 -->
-    <div class="col-lg-4 col-md-6 project-item" data-category="web">
-        <div class="project-card">
-            <div class="project-image">
-                <i class="fas fa-blog"></i>
-            </div>
-            <div class="project-body">
-                <h3 class="project-title">Kişisel Blog Platformu</h3>
-                <p class="project-description">
-                    ASP.NET Core ve PostgreSQL kullanarak geliştirdiğim tam özellikli blog platformu.
-                    Kullanıcı yönetimi, içerik düzenleme ve yorum sistemi içerir.
-                </p>
-                <div class="project-tags">
-                    <span class="project-tag">ASP.NET Core</span>
-                    <span class="project-tag">PostgreSQL</span>
-                    <span class="project-tag">Bootstrap</span>
+    @foreach (var proje in Model)
+    {
+        <div class="col-lg-4 col-md-6 project-item" data-category="@proje.Category?.ToLower()">
+            <div class="project-card shadow-sm">
+                <div class="project-image">
+                    <i class="fas fa-code"></i>
                 </div>
-                <div class="project-links">
-                    <a href="#" class="project-link link-demo">
-                        <i class="fas fa-external-link-alt me-2"></i>Demo
-                    </a>
-                    <a href="https://github.com/hasandemir34" target="_blank" class="project-link link-github">
-                        <i class="fab fa-github me-2"></i>GitHub
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
+                <div class="project-body">
+                    <h3 class="project-title">@proje.Title</h3>
+                    <p class="project-description">@proje.Description</p>
+                    <div class="project-tags">
+                        @if (!string.IsNullOrEmpty(proje.Technologies))
+                        {
+                            @foreach (var tech in proje.Technologies.Split(','))
+                            {
+                                <span class="project-tag">@tech.Trim()</span>
+                            }
+                        }
+                    </div>
+                    <div class="project-links">
+                        <a asp-action="ProjeDetay" asp-route-id="@proje.Id" class="project-link link-demo">
+                            <i class="fas fa-info-circle me-2"></i>Detaylar
+                        </a>
 
-    <!-- Proje 2 -->
-    <div class="col-lg-4 col-md-6 project-item" data-category="web">
-        <div class="project-card">
-            <div class="project-image">
-                <i class="fas fa-shopping-cart"></i>
-            </div>
-            <div class="project-body">
-                <h3 class="project-title">E-Ticaret Platformu</h3>
-                <p class="project-description">
-                    Modern bir e-ticaret sitesi. Ürün yönetimi, sepet sistemi, ödeme entegrasyonu
-                    ve admin paneli içermektedir.
-                </p>
-                <div class="project-tags">
-                    <span class="project-tag">React</span>
-                    <span class="project-tag">Node.js</span>
-                    <span class="project-tag">MongoDB</span>
-                </div>
-                <div class="project-links">
-                    <a href="#" class="project-link link-demo">
-                        <i class="fas fa-external-link-alt me-2"></i>Demo
-                    </a>
-                    <a href="https://github.com/hasandemir34" target="_blank" class="project-link link-github">
-                        <i class="fab fa-github me-2"></i>GitHub
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
+                        @if (!string.IsNullOrEmpty(proje.GithubLink))
+                        {
+                            <a href="@proje.GithubLink" target="_blank" class="project-link link-github">
+                                <i class="fab fa-github me-2"></i>GitHub
+                            </a>
+                        }
 
-    <!-- Proje 3 -->
-    <div class="col-lg-4 col-md-6 project-item" data-category="ai">
-        <div class="project-card">
-            <div class="project-image">
-                <i class="fas fa-brain"></i>
-            </div>
-            <div class="project-body">
-                <h3 class="project-title">Görüntü Sınıflandırma AI</h3>
-                <p class="project-description">
-                    TensorFlow ve Python kullanarak geliştirdiğim derin öğrenme modeli.
-                    Görüntüleri yüksek doğrulukla sınıflandırır.
-                </p>
-                <div class="project-tags">
-                    <span class="project-tag">Python</span>
-                    <span class="project-tag">TensorFlow</span>
-                    <span class="project-tag">Keras</span>
-                </div>
-                <div class="project-links">
-                    <a href="#" class="project-link link-demo">
-                        <i class="fas fa-external-link-alt me-2"></i>Demo
-                    </a>
-                    <a href="https://github.com/hasandemir34" target="_blank" class="project-link link-github">
-                        <i class="fab fa-github me-2"></i>GitHub
-                    </a>
+                        @* --- ADIM 2: ADMIN YÖNETİM BUTONLARI --- *@
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <div class="w-100 mt-2 d-flex gap-2">
+                                <a asp-action="ProjeGuncelle" asp-route-id="@proje.Id" class="btn btn-sm btn-warning flex-grow-1 text-dark">
+                                    <i class="fas fa-edit me-1"></i>Düzenle
+                                </a>
+                                <a asp-action="ProjeSil" asp-route-id="@proje.Id" class="btn btn-sm btn-danger flex-grow-1" 
+                                   onclick="return confirm('@proje.Title projesini silmek istediğine emin misin?')">
+                                    <i class="fas fa-trash-alt me-1"></i>Sil
+                                </a>
+                            </div>
+                        }
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- Proje 4 -->
-    <div class="col-lg-4 col-md-6 project-item" data-category="mobile">
-        <div class="project-card">
-            <div class="project-image">
-                <i class="fas fa-mobile-alt"></i>
-            </div>
-            <div class="project-body">
-                <h3 class="project-title">Görev Yönetimi Uygulaması</h3>
-                <p class="project-description">
-                    React Native ile geliştirilmiş cross-platform mobil uygulama.
-                    Görev oluşturma, düzenleme ve bildirim özellikleri içerir.
-                </p>
-                <div class="project-tags">
-                    <span class="project-tag">React Native</span>
-                    <span class="project-tag">Firebase</span>
-                    <span class="project-tag">Redux</span>
-                </div>
-                <div class="project-links">
-                    <a href="#" class="project-link link-demo">
-                        <i class="fas fa-external-link-alt me-2"></i>Demo
-                    </a>
-                    <a href="https://github.com/hasandemir34" target="_blank" class="project-link link-github">
-                        <i class="fab fa-github me-2"></i>GitHub
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Proje 5 -->
-    <div class="col-lg-4 col-md-6 project-item" data-category="web">
-        <div class="project-card">
-            <div class="project-image">
-                <i class="fas fa-chart-line"></i>
-            </div>
-            <div class="project-body">
-                <h3 class="project-title">Veri Görselleştirme Paneli</h3>
-                <p class="project-description">
-                    Gerçek zamanlı veri görselleştirme ve analiz platformu.
-                    Dinamik grafikler ve raporlama özellikleri sunar.
-                </p>
-                <div class="project-tags">
-                    <span class="project-tag">Vue.js</span>
-                    <span class="project-tag">D3.js</span>
-                    <span class="project-tag">WebSocket</span>
-                </div>
-                <div class="project-links">
-                    <a href="#" class="project-link link-demo">
-                        <i class="fas fa-external-link-alt me-2"></i>Demo
-                    </a>
-                    <a href="https://github.com/hasandemir34" target="_blank" class="project-link link-github">
-                        <i class="fab fa-github me-2"></i>GitHub
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Proje 6 -->
-    <div class="col-lg-4 col-md-6 project-item" data-category="web">
-        <div class="project-card">
-            <div class="project-image">
-                <i class="fas fa-comments"></i>
-            </div>
-            <div class="project-body">
-                <h3 class="project-title">Anlık Mesajlaşma Uygulaması</h3>
-                <p class="project-description">
-                    SignalR kullanarak geliştirdiğim gerçek zamanlı sohbet uygulaması.
-                    Grup sohbetleri ve dosya paylaşımı destekler.
-                </p>
-                <div class="project-tags">
-                    <span class="project-tag">ASP.NET Core</span>
-                    <span class="project-tag">SignalR</span>
-                    <span class="project-tag">TypeScript</span>
-                </div>
-                <div class="project-links">
-                    <a href="#" class="project-link link-demo">
-                        <i class="fas fa-external-link-alt me-2"></i>Demo
-                    </a>
-                    <a href="https://github.com/hasandemir34" target="_blank" class="project-link link-github">
-                        <i class="fab fa-github me-2"></i>GitHub
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
+    }
 </div>
 
 <script>
-    // Project filtering
     const filterButtons = document.querySelectorAll('.filter-btn');
     const projectItems = document.querySelectorAll('.project-item');
 
     filterButtons.forEach(button => {
         button.addEventListener('click', () => {
-            // Remove active class from all buttons
             filterButtons.forEach(btn => btn.classList.remove('active'));
-            // Add active class to clicked button
             button.classList.add('active');
 
             const filter = button.getAttribute('data-filter');
 
             projectItems.forEach(item => {
-                if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                const itemCategory = item.getAttribute('data-category');
+                if (filter === 'all' || itemCategory === filter) {
                     item.style.display = 'block';
                     item.style.animation = 'fadeInUp 0.5s ease-out';
                 } else {

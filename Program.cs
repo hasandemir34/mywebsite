@@ -27,7 +27,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => {
 
 var app = builder.Build();
 
-// 3. Veritabanı ve Admin Seed İşlemi (Otomatik Kurulum)
+// 3. Veritabanı ve Seed İşlemleri (Otomatik Kurulum)
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -44,7 +44,32 @@ using (var scope = app.Services.CreateScope())
         context.SaveChanges();
     }
 
-    // İlk Admin Kullanıcısını Oluştur (Giriş yapabilmen için)
+    // Örnek Projeler (Yeni Eklenen Kısım)
+    // Program.cs içindeki Seed kısmını şöyle düzenle:
+if (!context.Projects.Any())
+{
+    context.Projects.AddRange(
+        new Project 
+        { 
+            Title = "Kişisel Portfolyo Sitesi", 
+            Description = "ASP.NET Core MVC projesi.", 
+            Technologies = "C#, ASP.NET Core", 
+            Category = "web", // Kategori eklendi
+            GithubLink = "https://github.com/hasandemir34/mywebsite" 
+        },
+        new Project 
+        { 
+            Title = "Veri Analizi Çalışması", 
+            Description = "Python ile yapıldı.", 
+            Technologies = "Python, Pandas", 
+            Category = "ai", // Kategori eklendi
+            GithubLink = "https://github.com/hasandemir34" 
+        }
+    );
+    context.SaveChanges();
+}
+
+    // İlk Admin Kullanıcısını Oluştur
     var adminEmail = "admin@hasan.com";
     if (await userManager.FindByEmailAsync(adminEmail) == null)
     {

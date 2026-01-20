@@ -1,0 +1,61 @@
+@model mywebsite.Models.Project
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-action="Projelerim">Projelerim</a></li>
+                    <li class="breadcrumb-item active">@Model.Title</li>
+                </ol>
+            </nav>
+
+            <div class="card shadow-sm border-0 overflow-hidden">
+                <div class="bg-primary p-5 text-center text-white">
+                    <h1 class="display-4 fw-bold">@Model.Title</h1>
+                    <div class="mt-3">
+                        <span class="badge bg-light text-primary p-2 px-3">@Model.Category?.ToUpper()</span>
+                    </div>
+                </div>
+                
+                <div class="card-body p-4 p-lg-5">
+                    <h4 class="fw-bold mb-3">Proje Hakkında</h4>
+                    <div class="project-content lead text-muted mb-5" style="white-space: pre-line;">
+                        @Model.Content
+                        @if (string.IsNullOrEmpty(Model.Content))
+                        {
+                            <p>Bu proje için henüz detaylı bir yazı eklenmemiş.</p>
+                        }
+                    </div>
+
+                    <div class="row g-4 mt-2">
+                        <div class="col-md-6">
+                            <h5 class="fw-bold"><i class="fas fa-tools me-2"></i>Teknolojiler</h5>
+                            <div class="d-flex flex-wrap gap-2 mt-2">
+                                @foreach (var tech in Model.Technologies?.Split(',') ?? new string[0])
+                                {
+                                    <span class="badge bg-dark">@tech.Trim()</span>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-md-6 text-md-end">
+                            <h5 class="fw-bold">Bağlantılar</h5>
+                            <div class="mt-2">
+                                @if (!string.IsNullOrEmpty(Model.GithubLink))
+                                {
+                                    <a href="@Model.GithubLink" target="_blank" class="btn btn-outline-dark">
+                                        <i class="fab fa-github me-2"></i>GitHub'da İncele
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
