@@ -12,8 +12,8 @@ using mywebsite.Data;
 namespace mywebsite.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260120082809_AddContentToProject")]
-    partial class AddContentToProject
+    [Migration("20260120202009_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -240,6 +240,9 @@ namespace mywebsite.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("text");
@@ -258,6 +261,9 @@ namespace mywebsite.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Category")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Content")
                         .HasColumnType("text");
 
                     b.Property<string>("Description")
