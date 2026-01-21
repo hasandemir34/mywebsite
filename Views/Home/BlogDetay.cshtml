@@ -17,7 +17,7 @@
 
             <article class="blog-post card shadow-sm border-0 p-4 p-lg-5">
                 
-                @* 1. ADIM: Kapak Fotoğrafı Görüntüleme *@
+                @* Kapak Fotoğrafı Görüntüleme *@
                 @if (!string.IsNullOrEmpty(Model.ImageUrl))
                 {
                     <div class="text-center mb-4">
@@ -34,9 +34,9 @@
                     </div>
                 </header>
 
-                @* 2. ADIM: HTML İçeriği Görüntüleme (CKEditor için kritik) *@
+                @* KRİTİK NOKTA: HTML İçeriği Görüntüleme *@
                 <section class="blog-content lead" style="line-height: 1.8; color: #333;">
-                    @* Html.Raw kullanmazsak HTML etiketleri yazı olarak görünür *@
+                    @* Html.Raw kullanıldığında tarayıcı etiketleri (p, b, img) kod olarak değil, görsel öğe olarak işler *@
                     @Html.Raw(Model.Content)
                 </section>
 
@@ -46,7 +46,6 @@
                             <i class="fas fa-arrow-left me-2"></i>Diğer Yazılara Göz At
                         </a>
 
-                        @* Admin ise burada da düzenleme butonu görebilir *@
                         @if (User.Identity?.IsAuthenticated == true)
                         {
                             <a asp-action="BlogGuncelle" asp-route-id="@Model.Id" class="btn btn-warning">

@@ -1,3 +1,4 @@
+@using System.Text.RegularExpressions
 @model List<mywebsite.Models.Blog>
 @{
     ViewData["Title"] = "Öğrenme Günlüğüm";
@@ -15,6 +16,14 @@
         {
             @foreach (var yazi in Model)
             {
+                // 1. ADIM: HTML etiketlerini temizliyoruz
+                var temizMetin = Regex.Replace(yazi.Content ?? "", "<.*?>", string.Empty);
+                
+                // 2. ADIM: Temizlenmiş metinden 120 karakterlik özet alıyoruz
+                var ozet = temizMetin.Length > 120 
+                           ? temizMetin.Substring(0, 120) + "..." 
+                           : temizMetin;
+
                 <div class="col-md-6 col-lg-4 mb-4">
                     <div class="card h-100 border-0 shadow-sm">
                         <div class="card-body p-4">
@@ -23,8 +32,10 @@
                                 <small class="text-muted">@yazi.CreatedDate.ToShortDateString()</small>
                             </div>
                             <h4 class="card-title fw-bold mb-3">@yazi.Title</h4>
+                            
+                            @* 3. ADIM: Hazırladığımız temiz özeti burada gösteriyoruz *@
                             <p class="card-text text-secondary mb-4">
-                                @(yazi.Content.Length > 120 ? yazi.Content.Substring(0, 120) + "..." : yazi.Content)
+                                @ozet
                             </p>
                         </div>
                         <div class="card-footer bg-transparent border-0 p-4 pt-0 d-flex gap-2">
@@ -32,7 +43,6 @@
                                 Devamını Oku
                             </a>
 
-                            @* Admin girişi yapılmışsa Düzenle ve Sil butonlarını göster *@
                             @if (User.Identity?.IsAuthenticated == true)
                             {
                                 <a asp-action="BlogGuncelle" asp-route-id="@yazi.Id" class="btn btn-outline-warning btn-sm rounded-pill px-3">

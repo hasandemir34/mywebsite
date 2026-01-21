@@ -9,4 +9,5 @@ public class Project
     public string? Technologies { get; set; }
     public string? Category { get; set; } // Bu satırı ekle (web, mobile veya ai değerlerini alacak)
     public string? Content { get; set; }
+    public DateTime CreatedDate { get; set; } = DateTime.Now;
 }

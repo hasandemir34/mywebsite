@@ -2,36 +2,52 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using mywebsite.Data;
 using mywebsite.Models;
+using System.IO;
 
 namespace mywebsite.Controllers;
 
 public class HomeController : Controller
 {
     private readonly AppDbContext _context;
-    private readonly IWebHostEnvironment _webHostEnvironment; // 1. ADIM: Ortam bilgilerine erişim için bu alanı ekledik
+    private readonly IWebHostEnvironment _webHostEnvironment;
 
     public HomeController(AppDbContext context, IWebHostEnvironment webHostEnvironment)
     {
         _context = context;
-        _webHostEnvironment = webHostEnvironment; // 2. ADIM: Constructor üzerinden enjekte ettik
+        _webHostEnvironment = webHostEnvironment;
     }
 
     public IActionResult Index()
     {
         var startDate = DateTime.Now.Date.AddDays(-364);
+
+        // 1. Blog yazılarını tarihlerine göre gruplayıp sayılarını alıyoruz
         var blogCounts = _context.Blogs
             .Where(x => x.CreatedDate >= startDate)
             .GroupBy(x => x.CreatedDate.Date)
             .Select(g => new { Tarih = g.Key, Sayi = g.Count() })
-            .ToDictionary(k => k.Tarih, v => v.Sayi);
+            .ToList();
 
-        ViewBag.BlogCounts = blogCounts;
+        // 2. Projeleri tarihlerine göre gruplayıp sayılarını alıyoruz
+        var projectCounts = _context.Projects
+            .Where(x => x.CreatedDate >= startDate)
+            .GroupBy(x => x.CreatedDate.Date)
+            .Select(g => new { Tarih = g.Key, Sayi = g.Count() })
+            .ToList();
+
+        // 3. İki listeyi birleştirip (Concat) aynı tarihtekileri topluyoruz (Sum)
+        var totalCounts = blogCounts
+            .Concat(projectCounts)
+            .GroupBy(x => x.Tarih)
+            .ToDictionary(g => g.Key, g => g.Sum(x => x.Sayi));
+
+        ViewBag.BlogCounts = totalCounts;
         return View();
     }
 
-        public IActionResult Hakkimda() 
+    // --- HAKKIMDA BÖLÜMÜ ---
+    public IActionResult Hakkimda() 
     {
-        // Veritabanındaki ilk (ve tek) hakkımda kaydını çekiyoruz
         var about = _context.Abouts.FirstOrDefault();
         return View(about);
     }
@@ -66,6 +82,7 @@ public class HomeController : Controller
         return View(model);
     }
 
+    // --- BLOG BÖLÜMÜ ---
     public IActionResult Gunluk()
     {
         var yazilar = _context.Blogs.OrderByDescending(x => x.CreatedDate).ToList();
@@ -90,10 +107,7 @@ public class HomeController : Controller
         {
             if (ImageFile != null && ImageFile.Length > 0)
             {
-                // 3. ADIM: wwwroot/img klasörünün tam yolunu güvenli bir şekilde alıyoruz
                 string uploadDir = Path.Combine(_webHostEnvironment.WebRootPath, "img");
-                
-                // 4. ADIM: Klasör yoksa inşa ediyoruz (Hatanın ana çözümü burası)
                 if (!Directory.Exists(uploadDir)) Directory.CreateDirectory(uploadDir);
 
                 var fileName = Guid.NewGuid().ToString() + Path.GetExtension(ImageFile.FileName);
@@ -124,19 +138,24 @@ public class HomeController : Controller
 
     [HttpPost]
     [Authorize]
-    public IActionResult BlogGuncelle(Blog guncelBlog, IFormFile? ImageFile)
+    public IActionResult BlogGuncelle(Blog model, IFormFile? ImageFile)
     {
         if (ModelState.IsValid)
         {
+            var existingBlog = _context.Blogs.Find(model.Id);
+            if (existingBlog == null) return NotFound();
+
+            existingBlog.Title = model.Title;
+            existingBlog.Content = model.Content;
+
             if (ImageFile != null && ImageFile.Length > 0)
             {
                 string uploadDir = Path.Combine(_webHostEnvironment.WebRootPath, "img");
                 if (!Directory.Exists(uploadDir)) Directory.CreateDirectory(uploadDir);
 
-                // Eski dosyayı silme işlemi
-                if (!string.IsNullOrEmpty(guncelBlog.ImageUrl))
+                if (!string.IsNullOrEmpty(existingBlog.ImageUrl))
                 {
-                    var oldPath = Path.Combine(_webHostEnvironment.WebRootPath, guncelBlog.ImageUrl.TrimStart('/'));
+                    var oldPath = Path.Combine(_webHostEnvironment.WebRootPath, existingBlog.ImageUrl.TrimStart('/'));
                     if (System.IO.File.Exists(oldPath)) System.IO.File.Delete(oldPath);
                 }
 
@@ -147,33 +166,13 @@ public class HomeController : Controller
                 {
                     ImageFile.CopyTo(stream);
                 }
-                guncelBlog.ImageUrl = "/img/" + fileName;
+                existingBlog.ImageUrl = "/img/" + fileName;
             }
 
-            _context.Blogs.Update(guncelBlog);
             _context.SaveChanges();
             return RedirectToAction("Gunluk");
         }
-        return View(guncelBlog);
-    }
-
-    [Authorize]
-public IActionResult ProjeEkle() 
-{
-    return View();
-}
-
-    [HttpPost]
-    [Authorize]
-    public IActionResult ProjeEkle(Project yeniProje)
-    {
-        if (ModelState.IsValid)
-        {
-            _context.Projects.Add(yeniProje);
-            _context.SaveChanges();
-            return RedirectToAction("Projelerim");
-        }
-        return View(yeniProje);
+        return View(model);
     }
 
     [Authorize]
@@ -194,10 +193,31 @@ public IActionResult ProjeEkle()
         return RedirectToAction("Gunluk");
     }
 
-        [Authorize]
+    // --- PROJE BÖLÜMÜ ---
+    public IActionResult Projelerim() => View(_context.Projects.ToList());
+    public IActionResult ProjeDetay(int id) => View(_context.Projects.Find(id));
+
+    [Authorize]
+    public IActionResult ProjeEkle() => View();
+
+    [HttpPost]
+    [Authorize]
+    public IActionResult ProjeEkle(Project yeniProje)
+    {
+        if (ModelState.IsValid)
+        {
+            // KRİTİK: Projenin aktivite haritasında görünmesi için tarihini set ediyoruz
+            yeniProje.CreatedDate = DateTime.Now; 
+            _context.Projects.Add(yeniProje);
+            _context.SaveChanges();
+            return RedirectToAction("Projelerim");
+        }
+        return View(yeniProje);
+    }
+
+    [Authorize]
     public IActionResult ProjeGuncelle(int id)
     {
-        // Düzenlenecek projeyi veritabanından buluyoruz
         var proje = _context.Projects.Find(id);
         if (proje == null) return NotFound();
         return View(proje);
@@ -205,17 +225,26 @@ public IActionResult ProjeEkle()
 
     [HttpPost]
     [Authorize]
-    public IActionResult ProjeGuncelle(Project guncelProje)
+    public IActionResult ProjeGuncelle(Project model)
     {
         if (ModelState.IsValid)
         {
-            // View tarafında <input type="hidden" asp-for="Id" /> kullandığın için 
-            // ID otomatik olarak buraya gelecek.
-            _context.Projects.Update(guncelProje);
+            // Veritabanındaki orijinal projeyi buluyoruz
+            var existingProject = _context.Projects.Find(model.Id);
+            if (existingProject == null) return NotFound();
+
+            // Alanları güncelliyoruz, CreatedDate orijinal haliyle korunuyor
+            existingProject.Title = model.Title;
+            existingProject.Description = model.Description;
+            existingProject.GithubLink = model.GithubLink;
+            existingProject.Technologies = model.Technologies;
+            existingProject.Category = model.Category;
+            existingProject.Content = model.Content;
+
             _context.SaveChanges();
             return RedirectToAction("Projelerim");
         }
-        return View(guncelProje);
+        return View(model);
     }
 
     [Authorize]
@@ -229,9 +258,4 @@ public IActionResult ProjeEkle()
         }
         return RedirectToAction("Projelerim");
     }
-
-
-
-    public IActionResult Projelerim() => View(_context.Projects.ToList());
-    public IActionResult ProjeDetay(int id) => View(_context.Projects.Find(id));
 }
