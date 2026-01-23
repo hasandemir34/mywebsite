@@ -135,7 +135,7 @@
     }
 
     .filter-btn {
-        background: var(--dark-card);
+       background: var(--dark-card);
         border: 1px solid rgba(99, 102, 241, 0.2);
         color: var(--text-secondary);
         padding: 0.6rem 1.5rem;
@@ -145,10 +145,14 @@
     }
 
     .filter-btn:hover,
-    .filter-btn.active {
-        background: var(--primary-color);
-        color: white;
-        border-color: var(--primary-color);
+    .filter-btn.active,
+    .filter-btn:focus,
+    .filter-btn:active {
+        background: #6c757d !important; /* İstediğin gri tonu */
+        color: white !important;
+        border-color: #6c757d !important;
+        outline: none !important;
+        box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.5) !important; /* Hafif gri gölge */
     }
 
     @@keyframes fadeInUp {
