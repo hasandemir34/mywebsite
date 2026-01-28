@@ -252,4 +252,4 @@ C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\obj\Debug\net10.0\compressed\a3ygkw
 C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\obj\Debug\net10.0\compressed\nezrqnk58p-{0}-muycvpuwrr-muycvpuwrr.gz
 C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\obj\Debug\net10.0\compressed\v0zgfp0y55-{0}-87fc7y1x7t-87fc7y1x7t.gz
 C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\obj\Debug\net10.0\compressed\yfc7ypekbg-{0}-mlv21k5csn-mlv21k5csn.gz
-C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\obj\Debug\net10.0\compressed\oukl5ne45a-{0}-0mh3mddchz-0mh3mddchz.gz
+C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\obj\Debug\net10.0\compressed\oukl5ne45a-{0}-upa7708x0s-upa7708x0s.gz

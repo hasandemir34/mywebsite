@@ -4,27 +4,69 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Kişisel Blog & Portfolyo</title>
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; }
-        .navbar { box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .footer { background: #343a40; color: white; padding: 2rem 0; margin-top: 3rem; }
-        .footer a {
-                text-decoration: none !important; /* Alt çizgiyi kaldırır */
-                transition: opacity 0.3s; /* Hover efekti için yumuşak geçiş */
-            }
+        /* 1. Renk Değişkenleri (Paletimiz) */
+        :root {
+            --bg-color: #f8f9fa;
+            --text-color: #212529;
+            --card-bg: #ffffff;
+            --nav-bg: #212529;
+        }
 
-            .footer a:hover {
-                opacity: 0.8; /* Üzerine gelince hafif şeffaflık vererek etkileşim hissi yaratır */
-            }
+        /* Karanlık Mod Renkleri */
+        [data-bs-theme="dark"] {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --card-bg: #1e1e1e;
+            --nav-bg: #000000;
+        }
+
+        /* 2. Genel Tasarım Ayarları */
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg-color) !important; 
+            color: var(--text-color) !important;
+            transition: background-color 0.3s, color 0.3s; /* Yumuşak geçiş efekti */
+        }
+
+        .navbar { 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+            background-color: var(--nav-bg) !important;
+        }
+
+        .card { 
+            background-color: var(--card-bg); 
+            color: var(--text-color); 
+            border: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        /* Alt Bilgi (Footer) Ayarları */
+        .footer { 
+            background: #212529; 
+            color: white; 
+            padding: 2rem 0; 
+            margin-top: 3rem; 
+        }
+        .footer a { text-decoration: none !important; transition: opacity 0.3s; }
+        .footer a:hover { opacity: 0.8; }
+
+        /* Karanlık Mod Butonu Tasarımı */
+        #darkModeToggle {
+            border-radius: 20px;
+            padding: 5px 15px;
+            transition: 0.3s;
+        }
     </style>
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
       <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
@@ -36,30 +78,20 @@
                 <li class="nav-item"><a class="nav-link text-white" asp-controller="Home" asp-action="Gunluk">Blog</a></li>
                 <li class="nav-item"><a class="nav-link text-white" asp-controller="Home" asp-action="Hakkimda">Hakkımda</a></li>
 
-                @* Admin Girişi Yapılmışsa Görünecek Kısımlar *@
+                <li class="nav-item d-flex align-items-center ms-lg-3">
+                    <button class="btn btn-outline-info btn-sm" id="darkModeToggle">
+                        <i class="fas fa-moon" id="themeIcon"></i>
+                    </button>
+                </li>
+
+                @* Admin Girişi Yapılmışsa *@
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <li class="nav-item">
-                            <a class="nav-link text-warning fw-bold" asp-controller="Home" asp-action="HakkimdaGuncelle">
-                                <i class="fas fa-user-edit me-1"></i>Hakkımda Düzenle
-                            </a>
-                        </li>
-
-
-                    <li class="nav-item">
-                        <a class="nav-link text-warning fw-bold" asp-controller="Home" asp-action="ProjeEkle">
-                            <i class="fas fa-plus-circle me-1"></i>Proje Ekle
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-warning fw-bold" asp-controller="Home" asp-action="BlogEkle">
-                            <i class="fas fa-pen-nib me-1"></i>Yazı Ekle
-                        </a>
-                    </li>
-
+                    <li class="nav-item"><a class="nav-link text-warning fw-bold" asp-controller="Home" asp-action="HakkimdaGuncelle"><i class="fas fa-user-edit me-1"></i>Hakkımda Düzenle</a></li>
+                    <li class="nav-item"><a class="nav-link text-warning fw-bold" asp-controller="Home" asp-action="ProjeEkle"><i class="fas fa-plus-circle me-1"></i>Proje Ekle</a></li>
+                    <li class="nav-item"><a class="nav-link text-warning fw-bold" asp-controller="Home" asp-action="BlogEkle"><i class="fas fa-pen-nib me-1"></i>Yazı Ekle</a></li>
                 }
             </ul>
-
             <partial name="_LoginPartial" />
         </div>
       </div>
@@ -71,39 +103,55 @@
         </main>
     </div>
 
-   <footer class="footer">
-    <div class="container text-center">
-        <div class="mb-3">
-            <a href="https://github.com/hasandemir34" target="_blank" class="text-white mx-3 fs-4">
-                <i class="fab fa-github"></i>
-            </a>
-            <a href="https://www.linkedin.com/in/hasan-demir-6480662b9/" target="_blank" class="text-white mx-3 fs-4">
-                <i class="fab fa-linkedin"></i>
-            </a>
-            <a href="https://www.instagram.com/hasanboratav/" target="_blank" class="text-white mx-3 fs-4">
-                <i class="fab fa-instagram"></i>
-            </a>
-
-            <a href="https://medium.com/@@hasandemir54" target="_blank" class="text-white mx-3 fs-4">
-                    <i class="fab fa-medium"></i>
-            </a>
-
-            <a href="mailto:demirhasan0108@gmail.com" class="text-white mx-3 fs-4">
-                <i class="fas fa-envelope"></i>
-            </a>
+    <footer class="footer">
+        <div class="container text-center">
+            <div class="mb-3">
+                <a href="https://github.com/hasandemir34" target="_blank" class="text-white mx-3 fs-4"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/hasan-demir-6480662b9/" target="_blank" class="text-white mx-3 fs-4"><i class="fab fa-linkedin"></i></a>
+                <a href="https://www.instagram.com/hasanboratav/" target="_blank" class="text-white mx-3 fs-4"><i class="fab fa-instagram"></i></a>
+                <a href="https://medium.com/@@hasandemir54" target="_blank" class="text-white mx-3 fs-4"><i class="fab fa-medium"></i></a>
+                <a href="mailto:demirhasan0108@gmail.com" class="text-white mx-3 fs-4"><i class="fas fa-envelope"></i></a>
+            </div>
+            <hr class="bg-secondary w-25 mx-auto">
+            <span class="text-white small">&copy; @DateTime.Now.Year - Tüm hakları saklıdır.</span>
         </div>
-        
-        <hr class="bg-secondary w-25 mx-auto">
-        
-        <span class="text-white small">&copy; @DateTime.Now.Year - Tüm hakları saklıdır.</span>
-    </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
-    @* BU SATIRI EKLEMEN LAZIM: *@
-    @await RenderSectionAsync("Scripts", required: false)
+    <script>
+        const toggleBtn = document.getElementById('darkModeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const htmlElement = document.documentElement;
 
+        // 1. Sayfa yüklendiğinde hafızayı kontrol et
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        htmlElement.setAttribute('data-bs-theme', savedTheme);
+        updateUI(savedTheme);
+
+        // 2. Düğmeye tıklandığında temayı değiştir
+        toggleBtn.addEventListener('click', () => {
+            let currentTheme = htmlElement.getAttribute('data-bs-theme');
+            let newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            htmlElement.setAttribute('data-bs-theme', newTheme);
+            localStorage.setItem('theme', newTheme); // Seçimi kaydet
+            updateUI(newTheme);
+        });
+
+        // 3. İkonu ve Düğme Rengini Güncelle
+        function updateUI(theme) {
+            if (theme === 'dark') {
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+                toggleBtn.classList.replace('btn-outline-info', 'btn-outline-warning');
+            } else {
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+                toggleBtn.classList.replace('btn-outline-warning', 'btn-outline-info');
+            }
+        }
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
