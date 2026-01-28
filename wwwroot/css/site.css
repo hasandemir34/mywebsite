@@ -28,3 +28,25 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Footer yüksekliği */
 }
+/* Blog Kartı Modernizasyonu */
+.blog-card {
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    border-radius: 12px !important;
+    overflow: hidden;
+}
+
+.blog-card:hover {
+    transform: translateY(-8px); /* Kartı yukarı kaydırır */
+    box-shadow: 0 15px 30px rgba(0,0,0,0.12) !important; /* Gölgeyi derinleştirir */
+}
+
+/* "Devamını Oku" Buton Animasyonu */
+.btn-read-more {
+    transition: all 0.3s ease;
+    border-width: 2px;
+}
+
+.blog-card:hover .btn-read-more {
+    background-color: #0d6efd;
+    color: white;
+}

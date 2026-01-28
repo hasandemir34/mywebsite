@@ -7,56 +7,61 @@
 <div class="container py-5">
     <div class="text-center mb-5">
         <h1 class="display-5 fw-bold">Yazılım Serüvenim & Günlük</h1>
-        <p class="text-muted">Öğrendiklerimi, projelerimi ve teknik notlarımı burada paylaşıyorum.</p>
+        <p class="text-muted">Yazılım mühendisi olma yolunda öğrendiklerimi ve projelerimi burada paylaşıyorum.  </p>
+        <p>İyi Okumalar</p>
         <hr class="w-25 mx-auto">
     </div>
 
     <div class="row">
         @if (Model != null && Model.Any())
         {
-            @foreach (var yazi in Model)
-            {
-                // 1. ADIM: HTML etiketlerini temizliyoruz
-                var temizMetin = Regex.Replace(yazi.Content ?? "", "<.*?>", string.Empty);
-                
-                // 2. ADIM: Temizlenmiş metinden 120 karakterlik özet alıyoruz
-                var ozet = temizMetin.Length > 120 
-                           ? temizMetin.Substring(0, 120) + "..." 
-                           : temizMetin;
+            @* ... Mevcut foreach döngüsünün başlangıcı ... *@
+@foreach (var yazi in Model)
+{
+    @* Regex ve özet işlemleri aynı kalıyor *@
+    var temizMetin = Regex.Replace(yazi.Content ?? "", "<.*?>", string.Empty);
+    var ozet = temizMetin.Length > 120 ? temizMetin.Substring(0, 120) + "..." : temizMetin;
 
-                <div class="col-md-6 col-lg-4 mb-4">
-                    <div class="card h-100 border-0 shadow-sm">
-                        <div class="card-body p-4">
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2">Blog Yazısı</span>
-                                <small class="text-muted">@yazi.CreatedDate.ToShortDateString()</small>
-                            </div>
-                            <h4 class="card-title fw-bold mb-3">@yazi.Title</h4>
-                            
-                            @* 3. ADIM: Hazırladığımız temiz özeti burada gösteriyoruz *@
-                            <p class="card-text text-secondary mb-4">
-                                @ozet
-                            </p>
-                        </div>
-                        <div class="card-footer bg-transparent border-0 p-4 pt-0 d-flex gap-2">
-                            <a asp-action="BlogDetay" asp-route-id="@yazi.Id" class="btn btn-outline-primary btn-sm rounded-pill px-4">
-                                Devamını Oku
-                            </a>
-
-                            @if (User.Identity?.IsAuthenticated == true)
-                            {
-                                <a asp-action="BlogGuncelle" asp-route-id="@yazi.Id" class="btn btn-outline-warning btn-sm rounded-pill px-3">
-                                    <i class="fas fa-edit"></i> Düzenle
-                                </a>
-                                <a asp-action="BlogSil" asp-route-id="@yazi.Id" class="btn btn-outline-danger btn-sm rounded-pill px-3" 
-                                   onclick="return confirm('Bu yazıyı silmek istediğine emin misin?')">
-                                    <i class="fas fa-trash"></i> Sil
-                                </a>
-                            }
-                        </div>
-                    </div>
+    <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card h-100 border-0 shadow-sm blog-card"> @* blog-card sınıfı eklendi *@
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2">
+                        <i class="fas fa-code-branch me-1"></i> Blog Yazısı @* İkon eklendi *@
+                    </span>
+                    <small class="text-muted">
+                        <i class="far fa-calendar-alt me-1"></i> @yazi.CreatedDate.ToShortDateString()
+                    </small>
                 </div>
-            }
+                
+                <h4 class="card-title fw-bold mb-3">@yazi.Title</h4>
+                
+                <p class="card-text text-secondary mb-4" style="line-height: 1.6;">
+                    @ozet
+                </p>
+            </div>
+
+            <div class="card-footer bg-transparent border-0 p-4 pt-0 d-flex justify-content-between align-items-center">
+                <a asp-action="BlogDetay" asp-route-id="@yazi.Id" class="btn btn-outline-primary btn-sm rounded-pill px-4 btn-read-more">
+                    Devamını Oku <i class="fas fa-arrow-right ms-1"></i> @* Ok ikonu eklendi *@
+                </a>
+
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <div class="admin-actions"> @* Admin butonları gruplandı *@
+                        <a asp-action="BlogGuncelle" asp-route-id="@yazi.Id" class="text-warning me-2" title="Düzenle">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a asp-action="BlogSil" asp-route-id="@yazi.Id" class="text-danger" 
+                           onclick="return confirm('Bu yazıyı silmek istediğine emin misin?')" title="Sil">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
         }
         else
         {
