@@ -7,17 +7,15 @@
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-9">
-            @* Geri Dönüş Linki *@
             <nav aria-label="breadcrumb" class="mb-4">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a asp-action="Gunluk" class="text-decoration-none">Blog</a></li>
+                    <li class="breadcrumb-item"><a asp-controller="Blog" asp-action="Index" class="text-decoration-none">Blog</a></li>
                     <li class="breadcrumb-item active">@Model.Title</li>
                 </ol>
             </nav>
 
             <article class="blog-post card shadow-sm border-0 p-4 p-lg-5">
                 
-                @* Kapak Fotoğrafı Görüntüleme *@
                 @if (!string.IsNullOrEmpty(Model.ImageUrl))
                 {
                     <div class="text-center mb-4">
@@ -34,21 +32,19 @@
                     </div>
                 </header>
 
-                @* KRİTİK NOKTA: HTML İçeriği Görüntüleme *@
                 <section class="blog-content lead" style="line-height: 1.8; color: #333;">
-                    @* Html.Raw kullanıldığında tarayıcı etiketleri (p, b, img) kod olarak değil, görsel öğe olarak işler *@
                     @Html.Raw(Model.Content)
                 </section>
 
                 <footer class="mt-5 pt-4 border-top">
                     <div class="d-flex justify-content-between align-items-center">
-                        <a asp-action="Gunluk" class="btn btn-outline-primary">
+                        <a asp-controller="Blog" asp-action="Index" class="btn btn-outline-primary">
                             <i class="fas fa-arrow-left me-2"></i>Diğer Yazılara Göz At
                         </a>
 
                         @if (User.Identity?.IsAuthenticated == true)
                         {
-                            <a asp-action="BlogGuncelle" asp-route-id="@Model.Id" class="btn btn-warning">
+                            <a asp-controller="Blog" asp-action="Guncelle" asp-route-id="@Model.Id" class="btn btn-warning">
                                 <i class="fas fa-edit me-2"></i>Yazıyı Düzenle
                             </a>
                         }

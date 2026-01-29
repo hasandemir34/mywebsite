@@ -212,7 +212,7 @@
                         }
                     </div>
                     <div class="project-links">
-                        <a asp-action="ProjeDetay" asp-route-id="@proje.Id" class="project-link link-demo">
+                        <a asp-controller="Project" asp-action="Detay" asp-route-id="@proje.Id" class="project-link link-demo">
                             <i class="fas fa-info-circle me-2"></i>Detaylar
                         </a>
 
@@ -227,11 +227,11 @@
                         @if (User.Identity.IsAuthenticated)
                         {
                             <div class="w-100 mt-2 d-flex gap-2">
-                                <a asp-action="ProjeGuncelle" asp-route-id="@proje.Id" class="btn btn-sm btn-warning flex-grow-1 text-dark">
+                                <a asp-controller="Project" asp-action="Guncelle" asp-route-id="@proje.Id" class="btn btn-sm btn-warning flex-grow-1 text-dark">
                                     <i class="fas fa-edit me-1"></i>Düzenle
                                 </a>
-                                <a asp-action="ProjeSil" asp-route-id="@proje.Id" class="btn btn-sm btn-danger flex-grow-1" 
-                                   onclick="return confirm('@proje.Title projesini silmek istediğine emin misin?')">
+                                <a asp-controller="Project" asp-action="Sil" asp-route-id="@proje.Id" class="btn btn-sm btn-danger flex-grow-1" 
+                                onclick="return confirm('@proje.Title projesini silmek istediğine emin misin?')">
                                     <i class="fas fa-trash-alt me-1"></i>Sil
                                 </a>
                             </div>

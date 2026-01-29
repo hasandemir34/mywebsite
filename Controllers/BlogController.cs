@@ -17,14 +17,13 @@ namespace mywebsite.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
-        // Home/Gunluk yerine artık Blog/Index olacak
         public IActionResult Index()
         {
             var yazilar = _context.Blogs.OrderByDescending(x => x.CreatedDate).ToList();
             return View(yazilar);
         }
 
-        public IActionResult Detay(int id) // Eski adı: BlogDetay
+        public IActionResult Detay(int id)
         {
             var blog = _context.Blogs.Find(id);
             if (blog == null) return NotFound();
@@ -32,7 +31,7 @@ namespace mywebsite.Controllers
         }
 
         [Authorize]
-        public IActionResult Ekle() // Eski adı: BlogEkle
+        public IActionResult Ekle()
         {
             return View();
         }
@@ -67,7 +66,7 @@ namespace mywebsite.Controllers
         }
 
         [Authorize]
-        public IActionResult Guncelle(int id) // Eski adı: BlogGuncelle
+        public IActionResult Guncelle(int id)
         {
             var blog = _context.Blogs.Find(id);
             if (blog == null) return NotFound();
@@ -91,7 +90,6 @@ namespace mywebsite.Controllers
                     string uploadDir = Path.Combine(_webHostEnvironment.WebRootPath, "img");
                     if (!Directory.Exists(uploadDir)) Directory.CreateDirectory(uploadDir);
 
-                    // Eski resmi silme işlemi
                     if (!string.IsNullOrEmpty(existingBlog.ImageUrl))
                     {
                         var oldPath = Path.Combine(_webHostEnvironment.WebRootPath, existingBlog.ImageUrl.TrimStart('/'));
@@ -115,7 +113,7 @@ namespace mywebsite.Controllers
         }
 
         [Authorize]
-        public IActionResult Sil(int id) // Eski adı: BlogSil
+        public IActionResult Sil(int id)
         {
             var silinecekBlog = _context.Blogs.Find(id);
             if (silinecekBlog != null)

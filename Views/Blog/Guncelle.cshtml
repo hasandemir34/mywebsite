@@ -1,27 +1,48 @@
 @model mywebsite.Models.Blog
-<form asp-action="BlogGuncelle" method="post" enctype="multipart/form-data">
-    <input type="hidden" asp-for="Id" />
-    <input type="hidden" asp-for="CreatedDate" />
-    <input type="hidden" asp-for="ImageUrl" /> @* Mevcut resmi kaybetmemek için *@
 
+@{
+    ViewData["Title"] = "Yazıyı Düzenle";
+}
 
-    <div class="mb-3">
-        <label>Blog Başlığı</label>
-        <input asp-for="Title" class="form-control" />
-    </div>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card shadow border-0 p-4">
+                <h2 class="mb-4 text-warning"><i class="fas fa-edit me-2"></i>Blog Yazısını Düzenle</h2>
+                
+                <form asp-controller="Blog" asp-action="Guncelle" method="post" enctype="multipart/form-data">
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="CreatedDate" />
+                    <input type="hidden" asp-for="ImageUrl" />
 
-    <div class="mb-3">
-        <label>Mevcut Kapak Fotoğrafı</label><br />
-        <img src="@Model.ImageUrl" width="150" class="rounded mb-2" />
-        <input type="file" name="ImageFile" class="form-control" />
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Blog Başlığı</label>
+                        <input asp-for="Title" class="form-control" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Mevcut Kapak Fotoğrafı</label><br />
+                        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                        {
+                            <img src="@Model.ImageUrl" width="150" class="rounded mb-2" />
+                        }
+                        <input type="file" name="ImageFile" class="form-control" />
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">İçerik</label>
+                        <textarea asp-for="Content" id="Content"></textarea>
+                    </div>
+                    
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-warning flex-grow-1 fw-bold">Güncelle</button>
+                        <a asp-controller="Blog" asp-action="Index" class="btn btn-secondary px-4">İptal</a>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-    
-    <div class="mb-3">
-        <label>İçerik</label>
-        <textarea asp-for="Content" id="Content"></textarea>
-    </div>
-    <button type="submit" class="btn btn-primary">Güncelle</button>
-</form>
+</div>
 
 @section Scripts {
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>

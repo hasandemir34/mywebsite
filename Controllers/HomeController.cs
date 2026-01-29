@@ -9,7 +9,6 @@ public class HomeController : Controller
 {
     private readonly AppDbContext _context;
     
-    // IWebHostEnvironment artık burada lazım değil çünkü resim yükleme blog kısmına gitti
     public HomeController(AppDbContext context)
     {
         _context = context;
@@ -40,7 +39,6 @@ public class HomeController : Controller
         return View();
     }
 
-    // --- HAKKIMDA BÖLÜMÜ ---
     public IActionResult Hakkimda() 
     {
         var about = _context.Abouts.FirstOrDefault();

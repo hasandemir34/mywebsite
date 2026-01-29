@@ -42,20 +42,21 @@
             </div>
 
             <div class="card-footer bg-transparent border-0 p-4 pt-0 d-flex justify-content-between align-items-center">
-                <a asp-action="Detay" asp-route-id="@yazi.Id" class="btn btn-outline-primary btn-sm rounded-pill px-4 btn-read-more">
-                    Devamını Oku <i class="fas fa-arrow-right ms-1"></i> @* Ok ikonu eklendi *@
-                </a>
+                
+                <a asp-controller="Blog" asp-action="Detay" asp-route-id="@yazi.Id" class="btn btn-outline-primary btn-sm rounded-pill px-4 btn-read-more">
+                Devamını Oku <i class="fas fa-arrow-right ms-1"></i>
+                    </a>
 
                 @if (User.Identity?.IsAuthenticated == true)
                 {
-                    <div class="admin-actions"> @* Admin butonları gruplandı *@
-                        <a asp-action="Guncelle" asp-route-id="@yazi.Id" class="text-warning me-2" title="Düzenle">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <a asp-action="BlogSil" asp-route-id="@yazi.Id" class="text-danger" 
-                           onclick="return confirm('Bu yazıyı silmek istediğine emin misin?')" title="Sil">
-                            <i class="fas fa-trash"></i>
-                        </a>
+                     <div class="admin-actions">
+                    <a asp-controller="Blog" asp-action="Guncelle" asp-route-id="@yazi.Id" class="text-warning me-2" title="Düzenle">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <a asp-controller="Blog" asp-action="Sil" asp-route-id="@yazi.Id" class="text-danger" 
+                    onclick="return confirm('Bu yazıyı silmek istediğine emin misin?')" title="Sil">
+                        <i class="fas fa-trash"></i>
+                    </a>
                     </div>
                 }
             </div>

@@ -9,7 +9,7 @@
         <div class="card shadow border-0 p-4">
             <h2 class="mb-4 text-warning"><i class="fas fa-edit me-2"></i>Projeyi Düzenle</h2>
             
-            <form asp-action="ProjeGuncelle" method="post">
+            <form asp-controller="Project" asp-action="Guncelle" method="post">
                 @* KRİTİK: ID'yi gizli olarak göndermeliyiz ki sistem hangi projeyi güncelleyeceğini bilsin *@
                 <input type="hidden" asp-for="Id" />
 
@@ -49,7 +49,7 @@
 
                 <div class="d-flex gap-2">
                     <button type="submit" class="btn btn-warning flex-grow-1 fw-bold">Değişiklikleri Kaydet</button>
-                    <a asp-action="Projelerim" class="btn btn-secondary px-4">İptal</a>
+                    <a asp-controller="Project" asp-action="Index" class="btn btn-secondary px-4">İptal</a>
                 </div>
             </form>
         </div>

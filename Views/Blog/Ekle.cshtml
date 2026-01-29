@@ -10,15 +10,13 @@
             <div class="card shadow border-0 p-4">
                 <h2 class="mb-4 text-success"><i class="fas fa-plus-circle me-2"></i>Yeni Blog Yazısı Ekle</h2>
                 
-                @* 1. ADIM: Formun dosya gönderebilmesi için enctype ekledik *@
-                <form asp-action="BlogEkle" method="post" enctype="multipart/form-data">
+                <form asp-controller="Blog" asp-action="Ekle" method="post" enctype="multipart/form-data">
                     
                     <div class="mb-3">
                         <label class="form-label fw-bold">Yazı Başlığı</label>
                         <input asp-for="Title" class="form-control" placeholder="Başlık giriniz..." required />
                     </div>
 
-                    @* 2. ADIM: Görsel seçme alanını ekledik *@
                     <div class="mb-3">
                         <label class="form-label fw-bold">Kapak Fotoğrafı</label>
                         <input type="file" name="ImageFile" class="form-control" accept="image/*" />
@@ -27,13 +25,12 @@
 
                     <div class="mb-3">
                         <label class="form-label fw-bold">Yazı İçeriği</label>
-                        @* CKEditor bu textarea'yı yakalayacak *@
                         <textarea asp-for="Content" id="Content" class="form-control" rows="10"></textarea>
                     </div>
 
                     <div class="d-flex gap-2">
                         <button type="submit" class="btn btn-success flex-grow-1 fw-bold">Yayınla ve Paylaş</button>
-                        <a asp-action="Gunluk" class="btn btn-secondary px-4">İptal</a>
+                        <a asp-controller="Blog" asp-action="Index" class="btn btn-secondary px-4">İptal</a>
                     </div>
                 </form>
             </div>
@@ -42,7 +39,6 @@
 </div>
 
 @section Scripts {
-    @* Zengin Metin Editörü scriptleri *@
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
     <script>
         ClassicEditor

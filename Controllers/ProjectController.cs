@@ -14,12 +14,12 @@ namespace mywebsite.Controllers
             _context = context;
         }
 
-        public IActionResult Index() // Eski adı: Projelerim
+        public IActionResult Index()
         {
-            return View(_context.Projects.ToList());
+            return View(_context.Projects.OrderByDescending(x => x.CreatedDate).ToList());
         }
 
-        public IActionResult Detay(int id) // Eski adı: ProjeDetay
+        public IActionResult Detay(int id)
         {
             var project = _context.Projects.Find(id);
             if (project == null) return NotFound();
@@ -27,7 +27,7 @@ namespace mywebsite.Controllers
         }
 
         [Authorize]
-        public IActionResult Ekle() // Eski adı: ProjeEkle
+        public IActionResult Ekle()
         {
             return View();
         }
@@ -47,7 +47,7 @@ namespace mywebsite.Controllers
         }
 
         [Authorize]
-        public IActionResult Guncelle(int id) // Eski adı: ProjeGuncelle
+        public IActionResult Guncelle(int id)
         {
             var proje = _context.Projects.Find(id);
             if (proje == null) return NotFound();
@@ -77,7 +77,7 @@ namespace mywebsite.Controllers
         }
 
         [Authorize]
-        public IActionResult Sil(int id) // Eski adı: ProjeSil
+        public IActionResult Sil(int id)
         {
             var silinecekProje = _context.Projects.Find(id);
             if (silinecekProje != null)

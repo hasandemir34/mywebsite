@@ -59,7 +59,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
       <div class="container">
-        <a class="navbar-brand fw-bold" asp-controller="Home" asp-action="Index">HASAN DEMİR</a>
+        <a class="navbar-brand fw-bold" asp-controller="Home" asp-action="Index">Yazılım Serüvenim</a>
         
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
@@ -67,19 +67,19 @@
 
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
-                <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Anasayfa</a></li>
-                <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Projelerim">Projelerim</a></li>
-                <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Gunluk">Blog</a></li>
-                <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Hakkimda">Hakkımda</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Anasayfa</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Project" asp-action="Index">Projelerim</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Blog" asp-action="Index">Blog</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Hakkimda">Hakkımda</a></li>
 
-                @if (User.Identity.IsAuthenticated) {
-                    <li class="nav-item border-start ms-2 ps-2">
-                        <a class="nav-link text-warning small" asp-controller="Home" asp-action="ProjeEkle"><i class="fas fa-plus me-1"></i>Proje</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-warning small" asp-controller="Home" asp-action="BlogEkle"><i class="fas fa-pen me-1"></i>Yazı</a>
-                    </li>
-                }
+                    @if (User.Identity.IsAuthenticated) {
+                        <li class="nav-item border-start ms-2 ps-2">
+                            <a class="nav-link text-warning small" asp-controller="Project" asp-action="Ekle"><i class="fas fa-plus me-1"></i>Proje</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-warning small" asp-controller="Blog" asp-action="Ekle"><i class="fas fa-pen me-1"></i>Yazı</a>
+                        </li>
+                    }
             </ul>
 
             <div class="d-flex align-items-center gap-3">
