@@ -30,20 +30,20 @@ build_property._RazorSourceGeneratorDebug =
 build_property.EffectiveAnalysisLevelStyle = 10.0
 build_property.EnableCodeStyleSeverity = 
 
-[C:/Users/HASAN/Desktop/Kendi Sitem/mywebsite/Views/Home/BlogDetay.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxCbG9nRGV0YXkuY3NodG1s
+[C:/Users/HASAN/Desktop/Kendi Sitem/mywebsite/Views/Blog/Detay.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmxvZ1xEZXRheS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/HASAN/Desktop/Kendi Sitem/mywebsite/Views/Home/BlogEkle.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxCbG9nRWtsZS5jc2h0bWw=
+[C:/Users/HASAN/Desktop/Kendi Sitem/mywebsite/Views/Blog/Ekle.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmxvZ1xFa2xlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/HASAN/Desktop/Kendi Sitem/mywebsite/Views/Home/BlogGuncelle.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxCbG9nR3VuY2VsbGUuY3NodG1s
+[C:/Users/HASAN/Desktop/Kendi Sitem/mywebsite/Views/Blog/Guncelle.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmxvZ1xHdW5jZWxsZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/HASAN/Desktop/Kendi Sitem/mywebsite/Views/Home/Gunluk.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxHdW5sdWsuY3NodG1s
+[C:/Users/HASAN/Desktop/Kendi Sitem/mywebsite/Views/Blog/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmxvZ1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/HASAN/Desktop/Kendi Sitem/mywebsite/Views/Home/Hakkimda.cshtml]
@@ -58,20 +58,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/HASAN/Desktop/Kendi Sitem/mywebsite/Views/Home/ProjeDetay.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcm9qZURldGF5LmNzaHRtbA==
+[C:/Users/HASAN/Desktop/Kendi Sitem/mywebsite/Views/Project/Detay.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvamVjdFxEZXRheS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/HASAN/Desktop/Kendi Sitem/mywebsite/Views/Home/ProjeEkle.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcm9qZUVrbGUuY3NodG1s
+[C:/Users/HASAN/Desktop/Kendi Sitem/mywebsite/Views/Project/Ekle.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvamVjdFxFa2xlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/HASAN/Desktop/Kendi Sitem/mywebsite/Views/Home/ProjeGuncelle.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcm9qZUd1bmNlbGxlLmNzaHRtbA==
+[C:/Users/HASAN/Desktop/Kendi Sitem/mywebsite/Views/Project/Guncelle.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvamVjdFxHdW5jZWxsZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/HASAN/Desktop/Kendi Sitem/mywebsite/Views/Home/Projelerim.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcm9qZWxlcmltLmNzaHRtbA==
+[C:/Users/HASAN/Desktop/Kendi Sitem/mywebsite/Views/Project/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvamVjdFxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/HASAN/Desktop/Kendi Sitem/mywebsite/Views/Shared/Error.cshtml]
