@@ -2,9 +2,6 @@ using Microsoft.EntityFrameworkCore;
 using mywebsite.Data;
 using Microsoft.AspNetCore.Identity;
 using mywebsite.Models;
-using Microsoft.AspNetCore.Localization;
-using System.Globalization;
-using Microsoft.AspNetCore.Mvc.Razor;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,12 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 // 1. Servisleri Ekle
-// Dil dosyalarının (Resources) aranacağı klasörü belirtiyoruz
-builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
-
-builder.Services.AddControllersWithViews()
-    .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
-    .AddDataAnnotationsLocalization();
+builder.Services.AddControllersWithViews(); // Dil desteği ayarları kaldırıldı
 
 builder.Services.AddRazorPages(); // Identity sayfaları için gerekli
 
@@ -36,21 +28,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => {
 
 var app = builder.Build();
 
-// 3. Dil Seçeneklerini Yapılandır
-var supportedCultures = new[]
-{
-    new CultureInfo("tr-TR"),
-    new CultureInfo("en-US")
-};
-
-app.UseRequestLocalization(new RequestLocalizationOptions
-{
-    DefaultRequestCulture = new RequestCulture("tr-TR"),
-    SupportedCultures = supportedCultures,
-    SupportedUICultures = supportedCultures
-});
-
-// 4. Veritabanı ve Seed İşlemleri (Otomatik Kurulum)
+// 3. Veritabanı ve Seed İşlemleri (Otomatik Kurulum)
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -98,9 +76,11 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-// 5. Middleware Ayarları
+// 4. Middleware Ayarları
 app.UseStaticFiles();
 app.UseRouting();
+
+// app.UseRequestLocalization kaldırıldı
 
 app.UseAuthentication();
 app.UseAuthorization();

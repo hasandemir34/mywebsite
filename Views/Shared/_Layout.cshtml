@@ -1,8 +1,4 @@
-﻿@using Microsoft.AspNetCore.Mvc.Localization
-@inject IViewLocalizer Localizer
-
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="utf-8" />
@@ -83,16 +79,16 @@
                         <li class="nav-item">
                             <a class="nav-link text-warning small" asp-controller="Blog" asp-action="Ekle"><i class="fas fa-pen me-1"></i>Yazı</a>
                         </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-warning small" asp-controller="Home" asp-action="HakkimdaGuncelle">
+                                <i class="fas fa-user-edit me-1"></i> Hakkımda Düzenle
+                            </a>
+                        </li>
                     }
             </ul>
 
             <div class="d-flex align-items-center gap-3">
-                <div class="btn-group btn-group-sm">
-                    <a asp-controller="Language" asp-action="Change" asp-route-culture="tr-TR" asp-route-returnUrl="@Context.Request.Path" 
-                       class="btn btn-outline-light @(System.Globalization.CultureInfo.CurrentCulture.Name == "tr-TR" ? "active" : "")">TR</a>
-                    <a asp-controller="Language" asp-action="Change" asp-route-culture="en-US" asp-route-returnUrl="@Context.Request.Path" 
-                       class="btn btn-outline-light @(System.Globalization.CultureInfo.CurrentCulture.Name == "en-US" ? "active" : "")">EN</a>
-                </div>
 
                 <button class="btn btn-outline-info btn-sm" id="darkModeToggle">
                     <i class="fas fa-moon" id="themeIcon"></i>

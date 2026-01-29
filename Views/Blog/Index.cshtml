@@ -50,9 +50,7 @@
                 @if (User.Identity?.IsAuthenticated == true)
                 {
                      <div class="admin-actions">
-                    <a asp-controller="Blog" asp-action="Guncelle" asp-route-id="@yazi.Id" class="text-warning me-2" title="Düzenle">
-                        <i class="fas fa-edit"></i>
-                    </a>
+                    <a asp-controller="Blog" asp-action="Guncelle" asp-route-id="@yazi.Id" class="text-warning me-2 text-decoration-none" title="Düzenle"><i class="fas fa-edit"></i></a>
                     <a asp-controller="Blog" asp-action="Sil" asp-route-id="@yazi.Id" class="text-danger" 
                     onclick="return confirm('Bu yazıyı silmek istediğine emin misin?')" title="Sil">
                         <i class="fas fa-trash"></i>
