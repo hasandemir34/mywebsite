@@ -50,6 +50,3 @@ body {
     background-color: #0d6efd;
     color: white;
 }
-.nav-link, .btn-link, .text-decoration-none {
-    text-decoration: none !important;
-}

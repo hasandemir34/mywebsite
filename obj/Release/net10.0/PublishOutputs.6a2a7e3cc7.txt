@@ -1,0 +1,15 @@
+C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\publish\mywebsite.exe
+C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\publish\appsettings.Development.json
+C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\publish\appsettings.json
+C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\publish\mywebsite.dll
+C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\publish\mywebsite.runtimeconfig.json
+C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\publish\mywebsite.pdb
+C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\publish\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\publish\Microsoft.AspNetCore.Identity.UI.dll
+C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\publish\Microsoft.EntityFrameworkCore.dll
+C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\publish\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\publish\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\publish\Microsoft.Extensions.FileProviders.Embedded.dll
+C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\publish\Npgsql.dll
+C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\publish\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\publish\mywebsite.deps.json
