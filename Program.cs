@@ -14,7 +14,7 @@ builder.Services.AddControllersWithViews(); // Dil desteği ayarları kaldırıl
 builder.Services.AddRazorPages(); // Identity sayfaları için gerekli
 
 builder.Services.AddDbContext<AppDbContext>(options => 
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // 2. Identity (Giriş Sistemi) Konfigürasyonu
 builder.Services.AddDefaultIdentity<IdentityUser>(options => {
@@ -27,6 +27,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => {
 .AddEntityFrameworkStores<AppDbContext>();
 
 var app = builder.Build();
+app.UseHttpsRedirection();
 
 // 3. Veritabanı ve Seed İşlemleri (Otomatik Kurulum)
 using (var scope = app.Services.CreateScope())
@@ -72,7 +73,7 @@ using (var scope = app.Services.CreateScope())
     if (await userManager.FindByEmailAsync(adminEmail) == null)
     {
         var user = new IdentityUser { UserName = adminEmail, Email = adminEmail, EmailConfirmed = true };
-        await userManager.CreateAsync(user, "Hasan123!");
+        await userManager.CreateAsync(user, "!!!!!!!!");
     }
 }
 

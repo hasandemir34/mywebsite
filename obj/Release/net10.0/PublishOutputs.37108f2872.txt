@@ -1,0 +1,15 @@
+C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\bin\Release\net10.0\publish\mywebsite.exe
+C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\bin\Release\net10.0\publish\appsettings.Development.json
+C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\bin\Release\net10.0\publish\appsettings.json
+C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\bin\Release\net10.0\publish\mywebsite.dll
+C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\bin\Release\net10.0\publish\mywebsite.runtimeconfig.json
+C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\bin\Release\net10.0\publish\mywebsite.pdb
+C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\bin\Release\net10.0\publish\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\bin\Release\net10.0\publish\Microsoft.AspNetCore.Identity.UI.dll
+C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\bin\Release\net10.0\publish\Microsoft.EntityFrameworkCore.dll
+C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\bin\Release\net10.0\publish\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\bin\Release\net10.0\publish\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\bin\Release\net10.0\publish\Microsoft.Extensions.FileProviders.Embedded.dll
+C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\bin\Release\net10.0\publish\Npgsql.dll
+C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\bin\Release\net10.0\publish\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+C:\Users\HASAN\Desktop\Kendi Sitem\mywebsite\bin\Release\net10.0\publish\mywebsite.deps.json
